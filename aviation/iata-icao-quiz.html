@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>四选一民航知识测试：IATA,ICAO,机场——民航小助手</title>
+	<meta name="description" content="民航知识测试游戏，空乘等机组人员、地勤、民航专业学生可以在闲暇时刻通过选择反复记忆IATA,ICAO,机场名称，在游戏中学习认知民航相关概念和知识。">
+<meta name="Keywords" content="民航,空乘,空姐,专业知识, 手机游戏, 工具,测试, 游戏, IATA,ICAO,机场，城市">
+	<meta name="author" content="sh">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"
+	name="viewport">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection"> 
+<!-- Google Font and style definitions -->
+<link rel="stylesheet" href="../commoncssjs/css/style.css">
+
+<!-- include the skins (change to dark if you like) -->
+<link rel="stylesheet" href="../commoncssjs/css/light/theme.css"
+	id="themestyle">
+<link rel="stylesheet" href="css/fruit.css">
+<!--[if lt IE 9]>
+	<script src="../commoncssjs/js/html5.js"></script>
+	<link rel="stylesheet" href="../commoncssjs/css/ie.css">
+	<![endif]-->
+<!-- Apple iOS and Android stuff -->
+<meta name="apple-mobile-web-app-capable" content="no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon-precomposed"
+	href="apple-touch-icon-precomposed.png">
+<link rel="shortcut icon" href="images/favicon.ico">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport"
+	content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+ 
+ <style>
+ .grids{
+ width:310px;
+ height:310px; 
+  margin: 0 auto;  
+ }
+  .grid{
+  position: relative;
+  padding:18px;
+ width:37%;
+ height:37%;
+ border: 1px solid #eee;
+ border-radius: 5px; 
+ font-size:24px;
+ color:#666;
+-webkit-transition: width 1s ease;  
+    -moz-transition: width 1s ease;  
+    -o-transition: width 1s ease;  
+    -ms-transition: width 1s ease;  
+    transition: width 1s ease;  
+ }
+ .grid:hover{
+	border: 1px solid #f6b99c;
+ }
+
+.grid0{
+background-color: #9f9daa; 
+float:left;
+margin-left:0;
+
+}
+.grid1{
+background-color:#ceb3ac;
+margin-right:0;
+float:right;
+
+ }
+.grid2{
+background-color:#d5d8cd;
+float:left;
+margin-left:0;
+}
+.grid3{
+background-color:#a5a69e;
+margin-right:0;
+float:right;
+ }
+
+ </style>
+</head>
+ 
+ 
+<body onload = "hideloadinfo()">
+
+<div class="load6"  id="load6">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  <h2>努力加载数据中，闭上眼睛休息一会儿吧~</h2>
+</div> 
+ 
+	<div class="container">
+		<div class="heading">
+			<h1>四选一</h1>
+			<div class="scores-container">
+				<div class="score-container">0</div>
+				<div class="best-container">0</div>
+			</div>
+		</div>
+
+		<div class="above-game">
+			<p class="game-intro">按指令点击对应的方块</p>
+			<p class="game-intro">选择对应的IATA、ICAO或机场：</p>
+			<p class="mycmd" id="mycmd"></p>
+
+		</div>
+		<div class="game-container">
+			<div class="game-message">
+				<p>Game over!</p>
+				<div class="lower">
+					<a class="keep-playing-button"  >Keep going</a> <a
+						class="retry-button"  >Try again</a>
+				</div>
+			</div>
+
+<div id ="grids" class="grids">
+<div id="grid0" class="grid grid0"></div><div id="grid1" class="grid grid1"></div>
+<div id="grid2" class="grid grid2"></div><div id="grid3" class="grid grid3"></div>
+</div>
+ 		 
+
+			<br />
+		<!-- <a href="#" class = "muteit" id="i_mute" onclick="muteit()"></a>	-->		<div id="player"></div>	 <button class="restart-button">重 来</button>
+
+
+		</div>
+	</div>
+	  <script type="text/javascript">
+	function hideloadinfo(){ 
+	document.getElementById("load6").style.display = "none"; 
+}
+</script>
+  <script type="text/javascript"  src="./js/speakGenerator.js"></script>
+  <script type="text/javascript"  src="./js/bind_polyfill.js"></script>
+  <script type="text/javascript"  src="./js/candidate.js"></script>
+    <script type="text/javascript"  src="./js/candidategrid.js"></script>
+  
+  <script type="text/javascript"  src="./js/runnings.js"></script>
+  <script type="text/javascript"  src="./js/classlist_polyfill.js"></script>
+  <script type="text/javascript"  src="./js/animframe_polyfill.js"></script>
+  <script type="text/javascript"  src="./js/keyboard_input_manager.js"></script>
+  <script type="text/javascript"  src="./js/html_actuator.js"></script> 
+  <script type="text/javascript"  src="./js/world.js"></script>
+  <script type="text/javascript"  src="./js/local_storage_manager.js"></script>
+  <script type="text/javascript"  src="./js/game_manager.js"></script>
+  <script type="text/javascript"  src="./js/application.js"></script>
+
+</body>
+</html>
