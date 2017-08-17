@@ -10,7 +10,7 @@ geo map quiz 's countries version comes from <a href="http://www.scale18.com/cgi
 <ul>
   <li>IADA and ICAO codes for the workers to get famliar in the airports and airlines: http://vd.xjihe.com/aviation/iata-icao-quiz.html  </li>
  <li> England pupil math quiz</li>
- <li>Learn English word of the shape/color/number/fruits: http://vd.xjihe.com/englishword/pupil.html （***）</li>
+ <li>Learn English word of the shape/color/number/fruits: http://vd.xjihe.com/english2/pupil.html（***）</li>
  <li>Learn the geo location of the countries of the world: waiting for the original author's authorization</li>
  <li>Learn the geo location of the cities of the China:  http://vd.xjihe.com/geoquiz/allofchina.html</li>
  <li>psycology quizs, they are just for fun, for more reasonable quiz please visit: http://www.xjihe.com/quiz</li>
