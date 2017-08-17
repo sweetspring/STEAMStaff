@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>三选一反应能力测试：点击指示的内容</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"
+	name="viewport">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Google Font and style definitions -->
+<link rel="stylesheet" href="../commoncssjs/css/style.css">
+
+<!-- include the skins (change to dark if you like) -->
+<link rel="stylesheet" href="../commoncssjs/css/light/theme.css"
+	id="themestyle">
+<link rel="stylesheet" href="css/fruit.css">
+<!--[if lt IE 9]>
+	<script src="../commoncssjs/js/html5.js"></script>
+	<link rel="stylesheet" href="../commoncssjs/css/ie.css">
+	<![endif]-->
+<script src="js/fruit.js"></script>
+
+<!-- Apple iOS and Android stuff -->
+<meta name="apple-mobile-web-app-capable" content="no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon-precomposed"
+	href="apple-touch-icon-precomposed.png">
+<link rel="shortcut icon" href="fruit/favicon.ico">
+<link rel="apple-touch-icon" href="fruit/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport"
+	content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, 
+minimal-ui">
+<meta name="format-detection" content="telephone=no">
+
+
+</head>
+<body>
+	<img class="hide" id="apple" src="images/fruit/100x100/apple.jpg"
+		alt="apple" />
+	<img class="hide" id="apricot" src="images/fruit/100x100/apricot.jpg"
+		alt="apricot" />
+	<img class="hide" id="banana" src="images/fruit/100x100/banana.jpg"
+		alt="banana" />
+	<img class="hide" id="cherry" src="images/fruit/100x100/cherry.jpg"
+		alt="cherry" />
+	<img class="hide" id="grape" src="images/fruit/100x100/grape.jpg"
+		alt="grape" />
+	<img class="hide" id="hawthorn" src="images/fruit/100x100/hawthorn.jpg"
+		alt="hawthorn" />
+	<img class="hide" id="kiwi" src="images/fruit/100x100/kiwi.jpg"
+		alt="kiwi" />
+	<img class="hide" id="lemon" src="images/fruit/100x100/lemon.jpg"
+		alt="lemon" />
+	<img class="hide" id="mango" src="images/fruit/100x100/mango.jpg"
+		alt="mango" />
+	<img class="hide" id="orange" src="images/fruit/100x100/orange.jpg"
+		alt="orange" />
+	<img class="hide" id="pamegranate"
+		src="images/fruit/100x100/pamegranate.jpg" alt="pamegranate" />
+	<img class="hide" id="pomelo" src="images/fruit/100x100/pomelo.jpg"
+		alt="pomelo" />
+	<img class="hide" id="peach" src="images/fruit/100x100/peach.jpg"
+		alt="peach" />
+	<img class="hide" id="pear" src="images/fruit/100x100/pear.jpg"
+		alt="pear" />
+	<img class="hide" id="pineapple"
+		src="images/fruit/100x100/pineapple.jpg" alt="pineapple" />
+	<img class="hide" id="strawberry"
+		src="images/fruit/100x100/strawberry.jpg" alt="strawberry" />
+	<img class="hide" id="watermelon"
+		src="images/fruit/100x100/watermelon.jpg" alt="watermelon" />
+	<div class="container">
+		<div class="heading">
+			<h1>三选一</h1>
+			<div class="scores-container">
+				<div class="score-container" id="score">0</div>
+				<div class="best-container">0</div>
+			</div>
+		</div>
+
+		<div class="above-game">
+			<p class="game-intro">按指令点击对应的图片
+			<h4 id="mycmd">选择</h4>
+			</p>
+		</div>
+		<div class="game-container">
+			<div class="game-message">
+				<p>Game over!</p>
+				<div class="lower">
+					<a class="keep-playing-button" onclick="PassOne()">Keep going</a> <a
+						class="retry-button" onclick="Fail()">Try again</a>
+				</div>
+			</div>
+
+			<canvas id="content1" class="stage" width="300" height="300">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+			<br />
+			<button onclick="Init()">重来</button>
+
+		</div>
+	</div>
+	<script>
+		var score = 0;
+		var c = document.getElementById("content1");
+		var myctx = c.getContext("2d");
+		var cw = c.width;
+		var ch = c.height;
+		var firstmilescore = 20;
+		var width = height = 100;
+		var theone;
+		var isContinue = 0;
+		var thisrunbest = 0;
+		var pos = new Array([ 150, -80 ], [ -130, 80 ], [ -180, -80 ]);
+		Init();
+		//c.addEventListener("touchend", touchEnd, false);
+		c.addEventListener('mouseup', doMouseUp, false);
+		window.addEventListener('load', load, false);
+	</script>
+ 
+	  <script src="./js/bind_polyfill.js"></script>
+  <script src="./js/classlist_polyfill.js"></script>
+  <script src="./js/animframe_polyfill.js"></script>
+  <script src="./js/keyboard_input_manager.js"></script>
+  <script src="./js/html_actuator.js"></script> 
+  <script src="./js/local_storage_manager.js"></script>
+  <script src="./js/game_manager.js"></script>
+  <script src="./js/application.js"></script>
+
+</body>
+</html>
