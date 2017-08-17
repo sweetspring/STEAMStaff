@@ -8,7 +8,7 @@ geo map quiz 's countries version comes from <a href="http://www.scale18.com/cgi
 
 # What do they look like?
 <ul>
-  <li>COURSE to check the memorization: http://steam.xjihe.com/memorychecker/csggame.html  </li>
+  <li>COURSE for design a game to check the memorization: http://steam.xjihe.com/memorychecker/csggame.html (code has been lost, but can be recreated from this course) </li>
   <li>IADA and ICAO codes for the workers to get famliar in the airports and airlines: http://vd.xjihe.com/aviation/iata-icao-quiz.html  </li>
  <li> England pupil math quiz</li>
  <li>Learn English word of the shape/color/number/fruits: http://vd.xjihe.com/english2/pupil.html（***）</li>
