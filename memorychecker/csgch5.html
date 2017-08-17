@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head> 
+<title> C# 图片记忆力测试游戏教程——第五章 游戏效果的改进</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="SH">
+  <meta name="Keywords" content="C#, 游戏,编程，图片记忆力测试,入门教程,游戏效果，动画，延迟，线程，定时器，欢迎界面">
+  <meta name="Description" content="C# 图片记忆力测试游戏教程之游戏效果的改进，介绍动画制作，线程处理，定时器">
+<link href="css/menustyles.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="allsrc()">
+<div id="header"> 
+	<div class="topic">C# 图片记忆力测试游戏教程</div>
+	<div class="banner">5	游戏效果的改进</div>
+</div>
+
+<div id="main-nav">
+	<ul>
+		<li><a href="index.html">关于</a></li>
+		<li><a href="csgch1.html">第一章</a></li>
+		<li><a href="csgch2.html">第二章</a></li>
+		<li><a href="csgch3.html">第三章</a></li>
+		<li><a href="csgch3.html">第四章</a></li>
+		<li class="active">第五章</li>
+		<li><a href="csgch6.html">第六章</a></li>
+		<li><a href="csglearn.html">教学设计</a></li>
+
+		<li><a href="csggame.html">游戏说明</a></li>
+	</ul>
+	<div class="clear-both">&nbsp;</div>
+</div>
+
+
+
+<div id="content">
+
+<div id="indexbox"> 
+<div   id="boxheader">内容列表</div> 
+<div   id="boxcontent"> 
+<a href="#a51">5.1	引入线程处理让第2张正面图片延迟反转 </a><br/>
+<a href="#a52">5.2	引入定时器让第一张正面图片定时关闭 </a><br/>
+<a href="#a53">5.3	对每一个成功加以肯定 </a><br/>
+<a href="#a54">5.4	加入游戏欢迎动画 </a><br/>
+<a href="#a55">5.5	小结与技巧 </a><br/>
+</div> 
+</div>
+
+<div class ="section"><a name="a51"></a>5.1	引入线程处理让第2张正面图片延迟反转</div>
+<p class = "iteml2">i.	在源代码 16 第 5 行之后加上一行让图片控件立即显示正面图片，如源代码17所示。</p>
+<div class = "srcnote">源代码 17 pbClick新添加的行</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src17l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src17" style="overflow:hidden" disabled >
+pList[pbi].Refresh();
+</textarea>
+</td></tr></table>
+<p class = "iteml2">ii. 在源代码 16 第 16 行之后加上一行让图片控件延迟显示背面图片，如源代码18所示，即让线程睡眠一段时间，时间单位为毫秒。其中500表示显示时间为500毫秒。如源代码18所示。</p>
+<div class = "srcnote">源代码 18 pbClick新添加的行</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src18l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src18" style="overflow:hidden" disabled >
+Thread.Sleep(500);
+</textarea>
+</td></tr></table>
+<p class = "iteml2">iii.在Form1.cs头部找到using System.Windows.Forms;这一行，，在其后添加一行，如源代码19所示。这一部可以通过选中源代码18中的Thread，由系统修复提示为其自动添加。</p>	
+<div class = "srcnote">源代码 19 Form1.cs新添加的行，如源代码19所示。</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src19l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src19" style="overflow:hidden" disabled >
+using System.Threading;
+</textarea>
+</td></tr></table>
+运行程序，发现第2张正面图片已经能够延迟反转了，但是如果打开第1张正面图片后不做其他动作，则该图片会一直显示，不符合记忆力测试的逻辑。如果用户没有及时下一步动作，能不能让它自动反转回到背面图片呢？
+也就是让它显示一个短暂的时间之后，自动反转。要完成这个功能，需要使用游戏中经常会用到的控件定时器。
+<div class ="section"><a name="a52"></a>5.2	引入定时器让第一张正面图片定时关闭</div>
+<p class = "iteml1">1)	在Form1设计视图，从工具箱中找到timer, 拖到Form1窗体上，timer1控件会出现在窗体下方，它是一个不可见控件，在窗体运行时是看不到的。</p>
+<p class = "iteml1">2)	选中timer1，右键菜单中选中“属性”来打开属性页，</p>
+<p class = "iteml1">3)	在属性页找到属性“Interval”设置为“1000”。也就是说用户要在1秒之内进行下一步动作。</p>
+<p class = "iteml1">4)	切换到事件页，在事件“Tick”处双击，系统生成一个空的定时处理方法timer1_Tick，如源代码20所示。</p>
+<div class = "srcnote">源代码 20 方法timer1_Tick</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="4" wrap="off"  style="overflow:hidden" id = "src20l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="4" wrap="off"  id="src20" style="overflow:hidden" disabled >
+private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+</textarea>
+</td></tr></table>
+<p class = "iteml1">5)	在第一张正面图片打开后，启动定时器，即在源代码16的第25行之后加上如源代码21所示的处理。</p>
+<div class = "srcnote">源代码 21 方法pbClick中启动定时器</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="3" wrap="off"  style="overflow:hidden" id = "src21l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="3" wrap="off"  id="src21" style="overflow:hidden" disabled >
+                else if (count == 1) {
+                    timer1.Start();
+                }
+</textarea>
+</td></tr></table>
+定时器在两种情况下结束，一个是用户及时进行了下一步动作即打开了第2张正面图片，一个是定时时间到了。
+<p class = "iteml1">6)	在第2张正面图片打开后，停止定时器，即在源代码16的第9行之后加上如源代码22所示的处理。</p>
+<div class = "srcnote">源代码 22方法pbClick停止定时器</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src22l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src22" style="overflow:hidden" disabled >
+timer1.Stop();
+</textarea>
+</td></tr></table>
+<p class = "iteml1">7)	在定时处理方法中加入第1张正面反转到背面图片的处理。即为源代码20中的方法timer1_Tick添加内容。如源代码23所示。</p>
+<div class = "srcnote">源代码 23</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="3" wrap="off"  style="overflow:hidden" id = "src23l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="3" wrap="off"  id="src23" style="overflow:hidden" disabled >
+            pList[lastopen].Image = MemoryChecker.Properties.Resources.cover;
+            flaglist[lastopen] = true;
+            count = 0;
+</textarea>
+</td></tr></table>
+运行程序，调整timer1的Interval使得用户来得及反应。思考：如何在程序运行过程中调整timer1的Interval，能不能把它作为游戏的参数？
+<div class ="section"><a name="a53"></a>5.3	对每一个成功加以肯定</div>
+当同时显示两张相同的正面图片时，显示一段动画加以肯定。将两张正面图片显示动画。
+<p class = "iteml1">1)	编写旋转图片的动画方法rotateImage，具有一个参数是图片控件的序号，如源代码24所示。</p>
+<div class = "srcnote">源代码 24 方法rotateImage</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="24" wrap="off"  style="overflow:hidden" id = "src24l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="24" wrap="off"  id="src24" style="overflow:hidden" disabled >
+       private void rotateImage(int pbir)
+        {
+            Image temp = mm[bb[pbir]];
+
+            pList[pbir].Image = temp;
+            pList[pbir].Refresh();
+            Thread.Sleep(80);
+            temp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            pList[pbir].Image = temp;
+            pList[pbir].Refresh();
+            Thread.Sleep(80);
+            temp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            pList[pbir].Image = temp;
+            pList[pbir].Refresh();
+            Thread.Sleep(80);
+            temp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            pList[pbir].Image = temp;
+            pList[pbir].Refresh();
+            Thread.Sleep(80);
+            temp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            pList[pbir].Image = temp;
+            pList[pbir].Refresh();
+            Thread.Sleep(80);
+        }
+</textarea>
+</td></tr></table>
+<p class = "iteml1">2)	在源代码16的第11行之后添加新行，如源代码25所示。</p>
+<div class = "srcnote">源代码 25</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="2" wrap="off"  style="overflow:hidden" id = "src25l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="2" wrap="off"  id="src25" style="overflow:hidden" disabled >
+                        rotateImage(pbi);
+                        rotateImage(lastopen); 
+</textarea>
+</td></tr></table>
+思考：运行程序，可以看到当找到两张正面图片打开后，两张正面图片会分别旋转一圈。如何让他们同时旋转，并且也不妨碍继续寻找呢？
+这样的效果要引入多个线程来进行处理了。
+除了图片动画效果之外，各位还可以加入游戏音效来加强游戏效果，本教程暂时不再展开。
+<div class ="section"><a name="a54"></a>5.4	加入游戏欢迎动画</div>
+在游戏开始前，设置一个欢迎界面的动画。了解现成的方法AnimateWindow，请参阅MSDN查看其具体用法。
+	声明方式，如源代码 26所示:　
+<div class = "srcnote">源代码 26 AnimateWindow声明方式</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="2" wrap="off"  style="overflow:hidden" id = "src26l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="2" wrap="off"  id="src26" style="overflow:hidden" disabled >
+　　　　[DllImportAttribute("user32.dll")]
+　　　　private static extern bool AnimateWindow(IntPtr hwnd, int　dwTime, int　dwFlags);
+</textarea>
+</td></tr></table>
+	参数说明:
+<p class = "iteml2">i.	IntPtr hwnd: 目标窗口的句柄对象, 一般为 this.Handle</p>
+<p class = "iteml2">ii. int　dwTime: 动画的持续时间, 单位为毫秒。</p>
+<p class = "iteml2">iii.	int　dwFlags: 动画效果类型选项, 如表格2所示。</p>
+
+<div class = "srcnote">表格 2 AnimateWindow 方法的dwFlags参数取值</div>
+<table border="1px"  width="700px"><tr><td  width = "80px">
+dwFlags值</td><td  width = "580px">		效果</td></tr><td  width = "80px">
+0x00000001</td><td  width = "580px">			使用滑动类型，默认为该类型。当使用了0x00000010效果时，此效果被忽略</td></tr><td  width = "80px">
+0x00000002</td><td  width = "580px">			激活窗口，在使用了0x00010000效果时不可使用此效果</td></tr><td  width = "80px">
+0x00000004</td><td  width = "580px">			使用淡入效果</td></tr><td  width = "80px">
+0x00000008</td><td  width = "580px">			隐藏窗口</td></tr><td  width = "80px">
+0x00000010</td><td  width = "580px">			与0x00010000效果配合使用则效果为窗口几内重叠，单独使用窗口向外扩展.</td></tr><td  width = "80px">
+0x00010000</td><td  width = "580px">			自左向右显示窗口</td></tr><td  width = "80px">
+0x00020000</td><td  width = "580px">			自右向左显示窗口</td></tr><td  width = "80px">
+0x00040000</td><td  width = "580px">			自顶向下显示窗口</td></tr><td  width = "80px">
+0x00080000</td><td  width = "580px">			自下向上显示窗口</td></tr></table> 
+具体添加步骤如下。
+<p class = "iteml1">1)	在资源管理器中，选中项目“memorychecker” 右键菜单“添加”->“Windows窗体”，新建窗体Form2</p>
+<p class = "iteml1">2)	修改Program.cs,在运行Form1窗体之前添加一行对Form2窗体的调用。修改后的代码如源代码 27所示</p>
+<div class = "srcnote">源代码 27 Program.cs的内容</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="20" wrap="off"  style="overflow:hidden" id = "src27l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="20" wrap="off"  id="src27" style="overflow:hidden" disabled >
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace MemoryChecker
+{
+    static class Program
+    {
+        /// <summary>
+        /// 应用程序的主入口点。
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form2());//添加
+            Application.Run(new Form1());
+        }
+    }
+}
+</textarea>
+</td></tr></table>
+<p class = "iteml1">3)	Form2放入一个图片控件，其name属性改为“pbwelcom”；引入一张欢迎图片，如图CSG27所示。</p>
+ <p><img src="image/csg27_welcom.png" alt = "图CSG 27" width="345px" height="345px"/><br/>
+<div class="picnote">图CSG 27</div></p>
+<p class = "iteml1">4)	Form2放入一个定时器, 其name属性改为“welcomtimer”，其Interval属性改为“1200”。</p>
+<p class = "iteml1">5)	修改控件Form1、Form2的Location属性为同一个值,比如“100,100”，这是为了让窗体在屏幕的同一个地方显示。</p>
+<p class = "iteml1">6)	在Form2.cs文件的开头加入使用DllImportAttribute和Thread所需要的引用；如源代码 28所示。</p>
+<div class = "srcnote">源代码 28</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="2" wrap="off"  style="overflow:hidden" id = "src28l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="2" wrap="off"  id="src28" style="overflow:hidden" disabled >
+using System.Runtime.InteropServices;
+using System.Threading;
+</textarea>
+</td></tr></table>
+<p class = "iteml1">7)	加入对AnimateWindow方法的声明，即将源代码26的两行内容放到在Form2 类的开头；</p>
+<p class = "iteml1">8)	在Form1的构造函数末尾添加 类启动定时器和动画。如源代码 29 所示。</p>
+<div class = "srcnote">源代码 29</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="2" wrap="off"  style="overflow:hidden" id = "src29l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="2" wrap="off"  id="src29" style="overflow:hidden" disabled >
+			welcomtimer.Start();
+            AnimateWindow(this.Handle, 500, 0x00080000);
+</textarea>
+</td></tr></table>
+<p class = "iteml1">9)	为welcomtimer添加Tick事件处理，其处理方法内容如源代码30所示。</p>
+<div class = "srcnote">源代码 30</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="7" wrap="off"  style="overflow:hidden" id = "src30l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="7" wrap="off"  id="src30" style="overflow:hidden" disabled >
+ private void welcomtimer_Tick(object sender, EventArgs e)
+        {
+            AnimateWindow(this.Handle, 800, 0x00010000 + 0x00000002);
+           this.Refresh();
+            Thread.Sleep(1000);
+            this.Close();
+        }
+</textarea>
+</td></tr></table>
+<p class = "iteml1">10) 各位可以对照源代码31所示Form2.cs的内容找到修改添加的对应位置。</p>
+<div class = "srcnote">源代码 31</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="22" wrap="off"  style="overflow:hidden" id = "src31l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="22" wrap="off"  id="src31" style="overflow:hidden" disabled >
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+[源代码28]
+
+namespace MemoryChecker
+{
+    public partial class Form2 : Form
+    {
+        [源代码27]
+        public Form2()
+        {
+            InitializeComponent();
+            [源代码29]
+        }
+        [源代码30]    
+	}
+}
+</textarea>
+</td></tr></table>
+<div class ="section"><a name="a55"></a>5.5	小结与技巧</div>
+在本章学习开头，教师可以另外创建一些单独的窗体讲解线程处理、动画、定时器的应用，请学生自己将这些技术融合贯通应用到游戏中。 
+
+
+ <p/>
+<hr/>
+<div id="foot">&copy; room-365.com sh 2011 China</div>
+
+</div>
+
+
+<script>
+function allsrc(){
+	wline("src17"); 
+	wline("src18"); 
+	wline("src19"); 
+	wline("src20"); 
+	wline("src21"); 
+	wline("src22"); 
+	wline("src23"); 
+	wline("src24"); 
+	wline("src25"); 
+	wline("src26"); 
+	wline("src27"); 
+	wline("src28"); 
+	wline("src29"); 
+	wline("src30"); 
+	wline("src31"); 
+}
+var num="";
+function wline(srcx){
+	 var obj= document.getElementById(srcx);//G(srcx);
+	 var str=obj.value; 
+	 str=str.replace(/\r/gi,"");
+	 str=str.split("\n");
+	 var len=str.length;
+	 line(len,srcx+"l");
+}
+function line(n,srcxl){
+   var lineobj= document.getElementById(srcxl);//G(srcxl);
+   for(var i=1;i<n;i++){
+	  if(document.all){
+	   num+=i+"\r\n";
+	  }else{
+	   num+=i+"\n";
+	  }
+	}
+	lineobj.value=num;
+ 	num=""; 
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head> 
+<title> C# 图片记忆力测试游戏教程——第四章 设置游戏规则</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="SH">
+  <meta name="Keywords" content="C#, 游戏,编程，图片记忆力测试,入门教程,游戏逻辑">
+  <meta name="Description" content="C# 图片记忆力测试游戏教程之设置游戏规则，介绍游戏规则，程序流程">
+<link href="css/menustyles.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="allsrc()">
+<div id="header"> 
+	<div class="topic">C# 图片记忆力测试游戏教程</div>
+	<div class="banner">4	设置游戏规则</div>
+</div>
+
+<div id="main-nav">
+	<ul>
+		<li><a href="index.html">关于</a></li>
+		<li><a href="csgch1.html">第一章</a></li>
+		<li><a href="csgch2.html">第二章</a></li>
+		<li><a href="csgch3.html">第三章</a></li>
+		<li class="active">第四章</li>
+		<li><a href="csgch5.html">第五章</a></li>
+		<li><a href="csgch6.html">第六章</a></li>
+		<li><a href="csglearn.html">教学设计</a></li>
+
+		<li><a href="csggame.html">游戏说明</a></li>
+	</ul>
+	<div class="clear-both">&nbsp;</div>
+</div>
+
+
+
+<div id="content">
+ 
+<div id="indexbox"> 
+<div   id="boxheader">内容列表</div> 
+<div   id="boxcontent"> 
+<a href="#a41">4.1	执行要求1、2 </a><br/>
+<a href="#a42">4.2	执行要求3 </a><br/>
+<a href="#a43">4.3	运行结果 </a><br/>
+<a href="#a44">4.4	小结与技巧 </a><br/>
+</div> 
+</div>
+在本章中将首先设置一定的游戏规则，也就是进行游戏设计，然后将这些游戏逻辑通过一些方法和事件来进行执行、实现。可以联系自己平时常玩的连连看、挖地雷等游戏，先设置一个简单的游戏规则，然后在此基础上拓展升级。
+指定详细的游戏规则相当于在进一步细化一开始模糊的软件需求规格说明，然后进行详细设计，有兴趣的同学可以了解一下软件开发周期的相关概念。这一步也是展现各位创意和整合能力的地方。
+现有这样一个游戏规则，由3条要求组成。
+<p class = "iteml1">1)	要求1：窗体打开时所有图片控件显示全部为背面图片（同学可以尝试稍做变动加以体会，例如在极短的时间内全部显示正面图片再回到全部背面的界面）。</p>
+<p class = "iteml1">2)	要求2：用户只能由背面图片打开正面图片，连续点击两个图片控件，即图片控件为正面时，由程序来控制是否返回到背面，而不是由用户来人工控制（这一条要求是为了教学时简化处理，同学可以在完成本章后，尝试取消这一条要求）。</p>
+<p class = "iteml1">3)	要求3：在显示两个正面图片的情况下，如果两个正面图片相同，就保持显示（同学可以尝试稍做变动加以体会，例如将这2个图片消失掉），否则就让这两个图片控件都显示背面图片（同学可以尝试稍做变动加以体会，例如只关闭第一个正面图片）。</p>
+<div class ="section"><a name="a41"></a>4.1	执行要求1、2</div>
+要求1已经满足，为满足要求2，将图片控件为正面时的点击处理关闭掉，即注释掉源代码13方法pbClick中的7~11行。
+<div class ="section"><a name="a42"></a>4.2	执行要求3</div>
+设置一个计数器变量count来记录点击次数，当count为2时，判断当前打开的图片是否和上次打开的图片相同，如果相同，则不能再点击这两张图片，否则，将两个图片控件都显示为背面图片，其逻辑流程如图 CSG 26所示。
+
+ <p><img src="image/csg26_pbclickflow.png" alt = "图CSG 26 pbClick流程图" width="371px" height="609px"/><br/>
+<div class="picnote">图CSG 26 pbClick流程图</div></p>
+根据程序流程设计更改pbClick方法，如源代码16所示。
+<p class = "srcnote">源代码 16 更改后的pbClick方法</p>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="33" wrap="off"  style="overflow:hidden" id = "src16l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="33" wrap="off"  id="src16" style="overflow:hidden" disabled >
+      private void pbClick(int pbi)
+        {
+            if (flaglist[pbi] == true)
+            {
+                pList[pbi].Image = mm[bb[pbi]];
+                pList[pbi].Enabled = false; //Enable: 使能， Visible: 可见
+                count++;
+                if (count == 2)
+                {
+                    if (bb[pbi] == bb[lastopen])//图片相同
+                    {
+                        flaglist[pbi] = false;
+                        flaglist[lastopen] = false;
+                    }
+                    else
+                    {
+                        pList[lastopen].Image = MemoryChecker.Properties.Resources.cover;
+                        pList[pbi].Image = MemoryChecker.Properties.Resources.cover;
+                        pList[pbi].Enabled = true;
+                        pList[lastopen].Enabled = true;
+                        flaglist[pbi] = true;
+                        flaglist[lastopen] = true;
+                    }
+                    count = 0;
+                }
+                lastopen = pbi;
+            }
+            /*else
+            {
+                pList[pbi].Image = MemoryChecker.Properties.Resources.cover;
+            }
+            flaglist[pbi] = !flaglist[pbi];*/
+        }
+</textarea>
+</td></tr></table>
+<div class ="section"><a name="a43"></a>4.3	运行结果</div>
+现在游戏已经具备雏形，运行起来玩玩看。会发现第2张正面图片根本来不及显示就被关掉了，用户体验上好象是有的图片要点两次才看到正面，怎么办呢，通常的解决办法有两个：
+<p class = "iteml1">1)	延迟关闭</p>
+<p class = "iteml1">2)	或：关闭之前显示一个动画</p>
+这部分内容属于游戏效果和用户体验的改进，因为本章游戏逻辑处理内容已经比较耗时，这些改进的实现方法放到下一章去讲。
+
+<div class ="section"><a name="a44"></a>4.4	小结与技巧</div>
+思考：观察图CSG 26 pbClick流程图和源代码16中对于图片控件状态的记录，可以发现flaglist是人为和图片控件pList联系在一起的，也就是说需要程序员自己明白它俩之间的联系，能否把flaglist 和pList封装到一起呢？答案是可以的，连count也可以封装进去。建议应用面向对象的设计思想来加以改进。本教程限于篇幅和难度，不再展开。
+
+
+ <p/>
+<hr/>
+<div id="foot">&copy; room-365.com sh 2011 China</div>
+
+</div>
+
+
+<script>
+function allsrc(){
+	wline("src16"); 
+}
+var num="";
+function wline(srcx){
+	 var obj= document.getElementById(srcx);//G(srcx);
+	 var str=obj.value; 
+	 str=str.replace(/\r/gi,"");
+	 str=str.split("\n");
+	 var len=str.length;
+	 line(len,srcx+"l");
+}
+function line(n,srcxl){
+   var lineobj= document.getElementById(srcxl);//G(srcxl);
+   for(var i=1;i<n;i++){
+	  if(document.all){
+	   num+=i+"\r\n";
+	  }else{
+	   num+=i+"\n";
+	  }
+	}
+	lineobj.value=num;
+ 	num=""; 
+}
+</script>
+</body>
+</html>

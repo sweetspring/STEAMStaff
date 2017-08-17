@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head> 
+<title> C# 图片记忆力测试游戏教程——第二章</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="SH">
+  <meta name="Keywords" content="C#, 游戏,编程，图片记忆力测试,入门教程，数据初始化，数组随机排列">
+  <meta name="Description" content="C# 图片记忆力测试游戏教程游戏数据初始化，介绍数组的随机排列、现有方法的引用等">
+<link href="css/menustyles.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+ 
+</head>
+
+<body onload="allsrc()">
+<div id="header"> 
+	<div class="topic">C# 图片记忆力测试游戏教程</div>
+	<div class="banner">2	随机排列8对正面图片，并显示在窗体中</div>
+</div>
+
+<div id="main-nav">
+	<ul>
+		<li><a href="index.html">关于</a></li>
+		<li><a href="csgch1.html">第一章</a></li>
+		<li class="active">第二章</a></li>
+		<li><a href="csgch3.html">第三章</a></li>
+		<li><a href="csgch4.html">第四章</a></li>
+		<li><a href="csgch5.html">第五章</a></li>
+		<li><a href="csgch6.html">第六章</a></li>
+		<li><a href="csglearn.html">教学设计</a></li>
+		<li><a href="csggame.html">游戏说明</a></li>
+	</ul> 
+</div>
+
+
+<div id="content">
+ 
+<div id="indexbox"> 
+<div   id="boxheader">内容列表</div> 
+<div   id="boxcontent"> 
+
+<a href="#a21">2.1	按顺序排列8对正面图片，显示在窗体中 </a><br/>
+<a href="#a22">2.2	运行结果 </a><br/>
+<a href="#a23">2.3	随机排列数组 </a><br/>
+<a href="#a24">2.4	运行结果 </a><br/>
+
+</div> 
+</div>
+<a name="a21"></a><div class ="section">2.1	按顺序排列8对正面图片，显示在窗体中</div>
+<p class = "iteml1">1)	选择菜单视图->代码，切换到代码编辑界面。Form1.cs的内容如源代码1所示。</p>
+<div class = "srcnote">源代码 1 Form1.cs的内容</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="18" wrap="off"  style="overflow:hidden" id = "src1l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="18" wrap="off"  id="src1" style="overflow:hidden" disabled >
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MemoryChecker
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+    }
+}
+</textarea>
+</td></tr></table>
+
+<p class = "iteml1">2)	在Form1类中编写方法initPics，如源代码2所示。可以在源代码1的16行之后新起一行，添加该方法。</p>
+该方法里声明了3个数组，并进行了初始化。
+<p class = "iteml2">i.	整数数组aa, 有16个元素，每个元素的值用来表示图片数组中的图片元素的下标。</p>
+<p class = "iteml2">ii.	图片数组 mm, 有8个元素，每个元素的值用来表示一个图片资源中的图片。</p>
+<p class = "iteml2">iii.	图片控件数组pList, 有16个元素，每个元素的值用来表示一个图片控件。</p>
+最后利用for循环，将图片数组mm中的图片按照整数数组aa的排列赋值给图片控件数组pList的每个控件。
+<div class = "srcnote">源代码 2方法initPics的内容</div>
+ <table class="codebox"><tr>
+<td class="lines"> 
+ <textarea  cols="4" rows="18" wrap="off"  style="overflow:hidden" id = "src2l" disabled></textarea>  
+</td><td  class = "code">
+<textarea  cols="102" rows="18" wrap="off"  style="overflow:hidden" id="src2" disabled >
+void initPics() {
+	int[] aa = { 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, };
+	Image[] mm = {
+		MemoryChecker.Properties.Resources.m1,
+		MemoryChecker.Properties.Resources.m2,
+		MemoryChecker.Properties.Resources.m3,
+		MemoryChecker.Properties.Resources.m4,
+		MemoryChecker.Properties.Resources.m5,
+		MemoryChecker.Properties.Resources.m6,
+		MemoryChecker.Properties.Resources.m7,
+		MemoryChecker.Properties.Resources.m8
+	};
+	PictureBox[] pList = {pb1,pb2,pb3,pb4,pb5,pb6,pb7,pb8,pb9,pb10,pb11,pb12,pb13,pb14,pb15,pb16};
+	for(int i = 0; i<16; i++){
+		pList[i].Image = mm[aa[i]];
+	}
+}
+</textarea>    
+    </td>
+    </tr>
+</table>
+<p class = "iteml1">3)	在Form1类的构造函数中添加对initPics()的调用，如源代码3所示。可以在源代码1的15行之后新起一行，添加该调用; </p>
+<div class = "srcnote">源代码 3 Form1类的构造函数中添加的内容</div>
+ <table class="codebox"><tr><td class="lines"  valign= "top"> 
+ <textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src3l" disabled></textarea> 
+</td><td  class = "code"  valign= "top">
+<textarea  cols="100" rows="1" wrap="off"  id = "src3" style="overflow-x:hidden" disabled>
+initPics();
+</textarea>    
+    </td>
+    </tr>
+</table>
+<a name="a22"></a><div class ="section">2.2	运行结果</div>
+如图CSG 19所示。
+ <p><img src="image/csg19_sortedallpics.png" alt = "图CSG 19 按序排列的图片" width="373px"  height="395px"/><br/>
+<div class="picnote">图CSG 19 按序排列的图片</div></p>
+可以看到窗体中前两行和后两行是一样的。如果图片是按序排列的，那么就失去了游戏测试记忆力的意义。所以下一步要做的就是将图片随机排列。
+<a name="a23"></a><div class ="section">2.3	随机排列数组</div>
+<p class = "iteml1">1)	随机排列数组的方法有很多现成的，不需要自己编写，初学者可以通过网络查找现有方法。就象造汽车，要善于利用各零配件供应商，而不要一头扎进种橡树、造轮子的汪洋大海去。如果是作为商品出售或其他需要考虑知识产权的场合，又另当别论。本教程提供CommonSH.cs文件，其中已经添加了随机排列数组方法RandomSort的公共类CommonSH，如源代码4所示。注意第5行MemoryChecker需要改成和Form1中的namespace一致的名称。可以将该文件保存“D:\csgame\commoncode”目录下。用法为：</p>
+数x = RandomSort(数组y );
+<div class = "srcnote">源代码 4 CommonSH.cs文件的内容</div>
+ <table class="codebox"><tr><td class="lines"  valign= "top"> 
+ <textarea  cols="4" rows="30" wrap="off"  style="overflow:hidden" id = "src4l" disabled></textarea> 
+</td><td  class = "code"  valign= "top">
+<textarea  cols="100" rows="30" wrap="off"  id = "src4" style="overflow-x:hidden" disabled>
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MemoryChecker
+{
+    class CommonSH
+    {
+        public static T[] RandomSort<T>(T[] array)
+        {
+            int len = array.Length;
+            System.Collections.Generic.List<int> list = new System.Collections.Generic.List<int>();
+            T[] ret = new T[len];
+            Random rand = new Random();
+            int i = 0;
+            while (list.Count < len)
+            {
+                int iter = rand.Next(0, len);
+                if (!list.Contains(iter))
+                {
+                    list.Add(iter);
+                    ret[i] = array[iter];
+                    i++;
+                }
+            }
+            return ret;
+        }
+    }
+}
+</textarea>    
+    </td>
+    </tr>
+</table>
+<p class = "iteml1">2)	在项目中添加该文件。</p>
+<p class = "iteml2">i.	在解决方案资源管理器中，选中项目“MemoryChecker”，点击右键，选择右键菜单中的添加->现有项。如图CSG 20所示。</p>
+ <p><img src="image/csg20_addexisteditem.png" alt = "图CSG 20" width="423px"  height="458px"/><br/>
+<div class="picnote">图CSG 20</div></p>
+<p class = "iteml2">ii.	在弹出的对话框中，选择“D:\csgame\commoncode”目录的“CommonSH.cs”文件，点击添加按钮后看到该文件出现在解决方案资源管理器中项目“MemoryChecker”下面。</p>
+ <p><img src="image/csg21_addexisteditemDialog.png" alt = "图CSG 21" width="699px"  height="466px"/><br/>
+<div class="picnote">图CSG 21</div></p>
+<p class = "iteml1">3)	回到Form1.cs的代码视图，修改initPics方法。在源代码2的第2行之后添加新行。加入一个整数数组 bb,用来存放打乱后的下标，如源代码 5 所示，注意当调用其他类的方法时，要在方法前面加上该类的名称；另外将源代码2的第16行中的aa改为bb，如源代码 6 所示。</p>
+<div class = "srcnote">源代码 5 initPics方法添加的内容</div>
+ <table class="codebox"><tr><td class="lines"  valign= "top"> 
+ <textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src5l" disabled></textarea> 
+</td><td  class = "code"  valign= "top">
+<textarea  cols="100" rows="1" wrap="off"  id = "src5" style="overflow-x:hidden" disabled>
+int[] bb = CommonSH.RandomSort(aa) ;  
+</textarea>    
+    </td>
+    </tr>
+</table>
+<div class = "srcnote">源代码 6 initPics方法改动的内容</div>
+ <table class="codebox"><tr><td class="lines"  valign= "top"> 
+ <textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src6l" disabled></textarea> 
+</td><td  class = "code"  valign= "top">
+<textarea  cols="100" rows="1" wrap="off"  id = "src6" style="overflow-x:hidden" disabled>
+pList[i].Image = mm[bb[i]];
+</textarea>    
+    </td>
+    </tr>
+</table>
+<a name="a24"></a><div class ="section">2.4	运行结果</div>
+如图CSG 22所示。可以多次运行，查看到每次显示的结果是不同的，这便是随机打乱后的图片排列情况，接下来，在窗体初始状态下，要将图片翻回到背面，只有当用户点击该图片的时候才显示正面。
+ <p><img src="image/csg22_randomsorted.png" alt = "图CSG 22 随机排列的图片" width="373px"  height="395px"/><br/>
+<div class="picnote">图CSG 22 随机排列的图片</div></p>
+
+<div class ="section"><a name="a25">2.5	小结与技巧</a></div>
+ <p>将在近日完成，欢迎回来</p>
+ 
+<p/>
+<hr/>
+<div id="foot">&copy; room-365.com sh 2011 China</div>
+
+</div>
+
+<script>
+function allsrc(){
+	wline("src1"); 
+	wline("src2"); 
+	wline("src3"); 
+	wline("src4"); 
+	wline("src5"); 
+	wline("src6"); 
+}
+var num="";
+function wline(srcx){
+	 var obj= document.getElementById(srcx);//G(srcx);
+	 var str=obj.value; 
+	 str=str.replace(/\r/gi,"");
+	 str=str.split("\n");
+	 var len=str.length;
+	 line(len,srcx+"l");
+}
+function line(n,srcxl){
+   var lineobj= document.getElementById(srcxl);//G(srcxl);
+   for(var i=1;i<n;i++){
+	  if(document.all){
+	   num+=i+"\r\n";
+	  }else{
+	   num+=i+"\n";
+	  }
+	}
+	lineobj.value=num;
+ 	num=""; 
+}
+</script></body>
+</html>

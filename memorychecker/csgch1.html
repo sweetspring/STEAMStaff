@@ -1,0 +1,151 @@
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head> 
+<title> C# 图片记忆力测试游戏教程——第一章 创建排列4x4背面图片的窗体</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="SH">
+  <meta name="Keywords" content="C#, 游戏,编程，图片记忆力测试,入门教程，窗体布局">
+  <meta name="Description" content="C# 图片记忆力测试游戏教程第一章，创建排列4x4图片的窗体，介绍窗体布局，布局工具等">
+<link href="css/menustyles.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div id="header"> 
+	<div class="topic">C# 图片记忆力测试游戏教程</div>
+	<div class="banner">1	创建排列4x4图片的窗体，全部显示背面图片</div>
+</div>
+
+<div id="main-nav">
+	<ul>
+		<li><a href="index.html">关于</a></li>
+		<li class="active">第一章</a></li>
+		<li><a href="csgch2.html">第二章</a></li>
+		<li><a href="csgch3.html">第三章</a></li>
+		<li><a href="csgch4.html">第四章</a></li>
+		<li><a href="csgch5.html">第五章</a></li>
+		<li><a href="csgch6.html">第六章</a></li>
+		<li><a href="csglearn.html">教学设计</a></li>
+		<li><a href="csggame.html">游戏说明</a></li>
+	</ul> 
+</div>
+
+
+<div id="content">
+<div id="indexbox"> 
+<div   id="boxheader">内容列表</div> 
+<div   id="boxcontent"> 
+
+<a href="#a11">1.1	新建项目	</a><br/>
+<a href="#a12">1.2	准备图片	</a><br/>
+<a href="#a13">1.3	更改窗体标题	</a><br/>
+<a href="#a14">1.4	往窗体添加一个图片控件，并设置相关属性	</a><br/>
+<a href="#a15">1.5	添加余下15个一个图片控件，并设置相关属性	</a><br/>
+<a href="#a16">1.6	运行结果	</a><br/>
+<a href="#a17">1.7	小结与技巧	</a>
+</div> 
+</div>
+<div class ="section"><a name="a11">1.1	新建项目</a></div>
+<p class = "iteml1">1)	启动Microsoft Visual Studio，介绍3种方法。</p>
+<p class = "iteml2">i.	Windows 开始->所有程序->Microsoft Visual Studio 2005->Microsoft Visual Studio，如图CG-1所示。</p>
+ 
+<p><img src="image/csg1_startvs2005.png" alt = "图CSG 1 启动Microsoft Visual Studio" width="654px"  height="228px"/></p>
+<div class="picnote">图CSG 1 启动Microsoft Visual Studio</div>
+<p class = "iteml2">ii.	 或： 点击Windows桌面的Microsoft Visual Studio 快捷键</p>
+<p class = "iteml2">iii.	 或： 如果是改进现有项目，可以通过双击现有项目中的解决方案文件（*.sln），从而启动Microsoft Visual Studio，并打开该项目。</p>
+<p class = "iteml1">2)	新建项目。分两步。</p>
+	第一步，使弹出新建对话框。介绍3种方法。
+<p class = "iteml2">i.	选中菜单文件->新建->项目，如图CSG 2所示。</p>
+ 
+<p><img src="image/csg2_createnewprjshortkey.png" alt = "图CSG 2 新建项目"  width="410px"  height="361px"/></p>
+<div class="picnote">图CSG 2 新建项目</div>
+<p class = "iteml2">ii.	或：点击工具栏中的图标。</p>
+<p><img src="image/csg3_toolbar_newprj.png" alt = "图CSG 3" width="42px"  height="30px"/><div class="picnote">图CSG 3</div></p>
+
+<p class = "iteml2">iii.	或：快捷键 ctrl+shift+N。该快捷键可在菜单中查看，如图CSG 2中红线框所示。</p>
+	第二步，在弹出的新建项目对话框中，如图CSG 4所示，选择项目类型的语言为[Visual C#]，模板为[Windows 应用程序]，设置项目名称为“MemoryChecker”、位置为“d:\csgame”，此时解决方案名称自动为“MemoryChecker”。然后点击确定按钮，就完成了新建工作。
+ 
+<p><img src="image/csg4_newprjDialog.png" alt = "图CSG 4 新建项目对话框" width="681px"  height="436px"/></p>
+<div class="picnote">图CSG 4 新建项目对话框</div>
+
+<div class ="section"><a  id="a12"></a>1.2	准备图片</div>
+利用画图或其他图象处理工具制作9张大小为80*80的图片。其中8张为相似的正面图片，如图CSG 5~12所示，和1张背面图片，如图CSG 13所示。将这些图片文件放到“D:\csgame\pics”目录下。
+ 
+<p>
+<img src="image/m1.png" alt = "图CSG 5 m1.png" width="80px"  height="80px"/> &nbsp;&nbsp;&nbsp; <img src="image/m2.png" alt = "图CSG 6 m2.png" width="80px"  height="80px"/> &nbsp; &nbsp;&nbsp;
+<img src="image/m3.png" alt = "图CSG 7 m3.png" width="80px"  height="80px"/> &nbsp;&nbsp;&nbsp; <img src="image/m4.png" alt = "图CSG 8 m4.png" width="80px"  height="80px"/> &nbsp;&nbsp;&nbsp;
+<img src="image/m5.png" alt = "图CSG 9 m5.png" width="80px"  height="80px"/> &nbsp;&nbsp;&nbsp; <img src="image/m6.png" alt = "图CSG 10 m6.png" width="80px"  height="80px"/> &nbsp;&nbsp;&nbsp;
+<img src="image/m7.png" alt = "图CSG 11 m7.png" width="80px"  height="80px"/> &nbsp;&nbsp;&nbsp; <img src="image/m8.png" alt = "图CSG 12 m8.png" width="80px"  height="80px"/>
+<div class="picnote">图CSG 5 m1.png &nbsp;
+ 图CSG 6 m2.png &nbsp;
+ 图CSG 7 m3.png &nbsp;
+ 图CSG 8 m4.png &nbsp;
+ 图CSG 9 m5.png &nbsp;
+ 图CSG 10 m6.png &nbsp;
+ 图CSG 11 m7.png &nbsp;
+  图CSG 12 m8.png</div>
+ 
+<p><img src="image/cover.png" alt = "图CSG 13 cover.png" width="80px"  height="80px"/></p>
+<div class="picnote">图CSG 13 cover.png</div>
+<div class ="section"><a name="a13"></a>1.3	更改窗体标题</div>
+在Form1.cs的设计界面， 点击右键，在弹出的菜单中选中属性，然后在属性列表中找到Text，将其改为“图片记忆力测试游戏”。
+<div class ="section"><a name="a14"></a>1.4	往窗体添加一个图片控件，并设置相关属性</div>
+在工具箱中找到PictureBox控件（注意，在Form1.cs的设计界面视图下，工具箱才会显示内容），将其拖曳到窗体中。并且设置3个属性。
+<p class = "iteml1">1)	Name: 	pb1</p>
+<p class = "iteml1">2)	Size:		80,80 （和准备的图片大小一样）</p>
+<p class = "iteml1">3)	Image:	</p>
+<p class = "iteml2">i.	点击输入框左边的省略号按钮…，弹出选择资源对话框，如图CSG 14所示。</p>
+ 
+<p><img src="image/csg14_selectres.png" alt = "图CSG 14" width="489px"  height="319px"/></p>
+<div class="picnote">图CSG 14</div>
+<p class = "iteml2">ii.	点击导入按钮，在打开的文件对话框中选择放置图片的目录“D:\csgame\pics”,并选中所有图片，如图CSG 15所示。点击打开按钮回到选择对话框，如图CSG 16所示，并在其中选择“cover”，点击确认按钮，回到Form1.cs设计界面。</p>
+ 
+<p><img src="image/csg15_selectpics.png" alt = "图CSG 15" width="563px"  height="420px"/></p>
+<div class="picnote">图CSG 15</div> 
+<p><img src="image/csg16_selectpic.png" alt = "图CSG 16" width="489px"  height="319px"/></p>
+<div class="picnote">图CSG 16</div>
+<div class ="section"><a name="a15"></a>1.5	添加余下15个图片控件，并设置相关属性</div>
+可以在窗体上选中第一个图片控件进行复制粘贴，并利用工具栏中的界面布局工具进行布局调整。如图CSG 17所示。复制粘贴控件的时候可以选中多个控件进行，从而提高效率，如一次选中一行四个图片控件进行复制粘贴，直到窗体上布满16个控件。最后检查每个控件的名字Name 属性，从上到下，从左到右，依次为pb1~pb16。
+ 
+<p><img src="image/csg17_form1layout.png" alt = "图CSG 17" width="644px"  height="494px"/></p>
+<div class="picnote">图CSG 17</div><div class ="section"><a name="a16"></a>1.6	运行结果</div>
+如图CSG 18所示。
+ 
+<p><img src="image/csg18_allcover.png" alt = "图CSG 18" width="373px"  height="395px"/></p>
+<div class="picnote">图CSG 18</div>
+<div class ="section"><a name="a17"></a>1.7	小结与技巧</div>
+
+<p class = "iteml1">1)	在代码编辑器中可用的Windows 常用快捷键</p>
+<div class = "srcnote">表格 1 Windows 常用快捷键</div>
+<table border="1px"  ><tr><td  width = "80px">
+快捷键</td><td  width = "50px">	功能</td></tr><td  width = "80px">
+Ctrl+z</td><td  width = "50px">	取消</td></tr><td  width = "80px">
+Ctrl+c</td><td  width = "50px">	复制</td></tr><td  width = "80px">
+Ctrl+v</td><td  width = "50px">	粘贴</td></tr><td  width = "80px">
+home</td><td  width = "50px">	行首</td></tr><td  width = "80px">
+end</td><td  width = "50px">	行尾</td></tr><td  width = "80px">
+Ctrl+home</td><td  width = "50px">	页首</td></tr><td  width = "80px">
+Ctrl+end</td><td  width = "50px">	页尾</td></tr><td  width = "80px">
+tab	缩进</td></tr></table> 
+<p class = "iteml1">2)	集成开发环境IDE一般都会提供多种方法，如菜单、快捷键、工具栏、右键菜单让开发者使用某一项任务。它们各有长短之处。</p>
+<p class = "iteml2">i.	相对来说，鼠标+菜单是最慢的，例如，鼠标要在菜单上移动3次，并点击一次才能打开“新键项目”对话框；而点击工具栏上的按钮或快捷键只需要一次即可打开。</p>
+<p class = "iteml2">ii.	初学者可以记住一些常用的快捷键，例如，经常要运行和调试程序，如果使用快捷键，书写代码的手就无须离开键盘，将比其他方式快捷准确。</p>
+<p class = "iteml2">iii.	如果正好在用鼠标，就尽量使用右键菜单和工具栏上的按钮，例如，在窗体布局设计时，工具栏上的按钮就比较方便。</p>
+<p class = "iteml2">iv.	另一方面，菜单对于初学者来说，是非常齐全的一个导航系统，可以了解该系统可以做哪些事情，在忘记快捷键的时候，可以通过菜单查询，例如，初学者经常会把某个窗口关闭或打不开， 就可以到视图菜单下找找看。</p>
+<p class = "iteml1">3)	书写属性和方法的习惯：</p>
+<p class = "iteml2">i.	在书写代码时，写出一个变量后，尽量使用“.”运算符将可选属性和方法列出来，并通过继续书写前几个字母进行搜索，然后用“Enter”回车键选择找到的属性或方法。</p>
+<p class = "iteml2">ii.在书写代码时，碰到可以重复的内容， 可以一手鼠标，一手快捷键，两手并用提高效率。比如连续设置某个组件对象的属性，可以在第一次书写好后，右手将其鼠标双击选中，左手用“ctrl+c”进行复制，然后右手再将鼠标光标移动到下一个位置，左手用“ctrl+v”进行粘贴。</p>
+<p class = "iteml1">4)	组件的属性以及如何取值在属性设置页中可以方便地查看到。例如， 图片控件PictureBox 的Image 属性，在代码编辑视图赋值的时候可能会不知道如何让一个图片控件(ie:pb1)显示把一个图片资源(ie:m1.png)，则可以回到设计视图，浏览该图片控件的属性，找到Image属性（如果没有阅读过文档或其他教材，可以通过英文属性的意思来猜测再进行验证），然后查看其取值为 (MemoryChecker.Properties.Resources.cover)，分析其组成可知赋值的语句为。 </p>
+<p class="grammabox">pb1.Image = MemoryChecker.Properties.Resources.cover ;</p>
+其中pb1是指控件的名称，cover是图片在资源中的名称。
+<p class = "iteml1">5)	建议安装MSDN，它是初学者最好的向导和助手，也是入门以后开发旅途中的良伴。如果要查找满足特定需求的组件、属性、方法等，查MSDN能获得比较全面、精确的说明和示例帮助。.net超越曾经的桌面之王delphi 的一大方面，就是提供了强大的、细致的语言的说明文档MSDN。初学者还可以学习MSDN中的一些示例，包括其代码的书写规范。</p>
+ 
+
+<p/>
+<hr/>
+<div id="foot">&copy; room-365.com sh 2011 China</div>
+
+</div>
+</body>
+</html>

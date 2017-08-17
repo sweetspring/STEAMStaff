@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head> 
+<title> C# 图片记忆力测试游戏教程——第二章</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="SH">
+  <meta name="Keywords" content="C#, 游戏,编程，图片记忆力测试,入门教程">
+  <meta name="Description" content="C# 图片记忆力测试游戏教程概要说明，介绍知识点、前提、相关连接等">
+<link href="css/menustyles.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#main {color:#666}
+textarea{border:1px solid #7f9db9; font-size:9pt; width:430px; color:#000}
+.grey{color:#999}
+#msg1,#msg2,#msg3,#msg4{ display:none}
+#ol{position:absolute; z-index:1; padding:0px; margin:0px; border:0px; background:#ecf0f5;width:23px; text-align:left;  }
+.lineno{background:#ecf0f5; height:160px; overflow:hidden; width:32px; border-right:0; line-height:20px; margin:0px; padding:0px;text-align:center} 
+#c2{font-family:Arial, Helvetica, sans-serif; height:160px;  margin:0px;  width:416px; padding:0 0 0 35px; overflow-x: hidden; line-height:20px;}
+</style>
+<script language="javascript" type="text/javascript">
+String.prototype.trim2 = function()
+{
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+function F(objid){
+ return document.getElementById(objid).value;
+}
+function G(objid){
+ return document.getElementById(objid);
+}
+
+</script>
+
+</head>
+
+<body onLoad="keyUp();">
+<div id="header"> 
+	<div class="topic">C# 图片记忆力测试游戏教程</div>
+	<div class="banner">2	随机排列8对正面图片，并显示在窗体中</div>
+</div>
+
+<div id="main-nav">
+	<ul>
+		<li><a href="index.html">关于</a></li>
+		<li><a href="csgch1.html">第一章</a></li>
+		<li class="active">第二章</a></li>
+		<li><a href="csgch3.html">第三章</a></li>
+		<li><a href="csgch4.html">第四章</a></li>
+		<li><a href="csglearn.html">教学设计</a></li>
+		<li><a href="csggame.html">游戏说明</a></li>
+	</ul> 
+</div>
+
+
+<div id="content">
+ 
+<div id="indexbox"> 
+<div   id="boxheader">内容列表</div> 
+<div   id="boxcontent"> 
+
+<a href="#a21">2.1	按顺序排列8对正面图片，显示在窗体中 </a><br/>
+<a href="#a22">2.2	运行结果 </a><br/>
+<a href="#a23">2.3	随机排列数组 </a><br/>
+<a href="#a24">2.4	运行结果 </a><br/>
+
+</div> 
+</div>
+<div class ="section"><a name="#a21">2.1	按顺序排列8对正面图片，显示在窗体中</a></div>
+<p class = "iteml1">1)	选择菜单视图->代码，切换到代码编辑界面。Form1.cs的内容如源代码1所示。</p>
+源代码 1 Form1.cs的内容
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="position:relative">
+  <tr>
+    <td width="55%">
+    <div id="ol"><textarea cols="2" rows="30" id="li1" class ="lineno" disabled></textarea></div>
+    <textarea name="co" cols="60" rows="30" wrap="off" id="c21"  onblur="check('2')" onkeyup="keyUp()" onFocus="clearValue('2')" onscroll="G('li1').scrollTop = this.scrollTop;" oncontextmenu="return false"  class="grey" disabled>
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MemoryChecker
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+    }
+}
+</textarea>    
+    </td>
+    </tr>
+</table>
+
+<p class = "iteml1">2)	在Form1类中编写方法initPics，如源代码2所示。可以在源代码1的16行之后新起一行，添加该方法。</p>
+该方法里声明了3个数组，并进行了初始化。
+<p class = "iteml2">i.	整数数组aa, 有16个元素，每个元素的值用来表示图片数组中的图片元素的下标。</p>
+<p class = "iteml2">ii.	图片数组 mm, 有8个元素，每个元素的值用来表示一个图片资源中的图片。</p>
+<p class = "iteml2">iii.	图片控件数组pList, 有16个元素，每个元素的值用来表示一个图片控件。</p>
+最后利用for循环，将图片数组mm中的图片按照整数数组aa的排列赋值给图片控件数组pList的每个控件。
+源代码 2方法initPics的内容
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="position:relative">
+  <tr>
+    <td width="55%">
+    <div id="ol"><textarea cols="2" rows="30" id="li2" class = "lineno" disabled></textarea></div>
+    <textarea name="co" cols="60" rows="30" wrap="off" id="c22"  onblur="check('2')" onkeyup="keyUp()" onFocus="clearValue('2')" onscroll="G('li2').scrollTop = this.scrollTop;" oncontextmenu="return false"  class="grey" disabled>
+void initPics() {
+            int[] aa = { 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, };
+            Image[] mm = {
+                MemoryChecker.Properties.Resources.m1,
+                MemoryChecker.Properties.Resources.m2,
+                MemoryChecker.Properties.Resources.m3,
+                MemoryChecker.Properties.Resources.m4,
+                MemoryChecker.Properties.Resources.m5,
+                MemoryChecker.Properties.Resources.m6,
+                MemoryChecker.Properties.Resources.m7,
+                MemoryChecker.Properties.Resources.m8
+            };
+            PictureBox[] pList = {pb1,pb2,pb3,pb4,pb5,pb6,pb7,pb8,pb9,pb10,pb11,pb12,pb13,pb14,pb15,pb16};
+            for(int i = 0; i<16; i++){
+                pList[i].Image = mm[aa[i]];
+            }
+}
+</textarea>    
+    </td>
+    </tr>
+</table>
+<p class = "iteml1">3)	在Form1类的构造函数中添加对initPics()的调用，如源代码3所示。可以在源代码1的15行之后新起一行，添加该调用; </p>
+源代码 3 Form1类的构造函数中添加的内容
+1	             initPics();
+<div class ="section"><a name="#a21">2.2	运行结果</a></div>
+如图CSG 19所示。
+ <p><img src="image/" alt = "图CSG 19 按序排列的图片"/><br/>
+<div class="picnote">图CSG 19 按序排列的图片</div></p>
+可以看到窗体中前两行和后两行是一样的。如果图片是按序排列的，那么就失去了游戏测试记忆力的意义。所以下一步要做的就是将图片随机排列。
+<div class ="section"><a name="#a21">2.3	随机排列数组</a></div>
+<p class = "iteml1">1)	随机排列数组的方法有很多现成的，不需要自己编写，初学者可以通过网络查找现有方法。就象造汽车，要善于利用各零配件供应商，而不要一头扎进种橡树、造轮子的汪洋大海去。如果是作为商品出售或其他需要考虑知识产权的场合，又另当别论。本教程提供CommonSH.cs文件，其中已经添加了随机排列数组方法RandomSort的公共类CommonSH，如源代码4所示。注意第5行MemoryChecker需要改成和Form1中的namespace一致的名称。可以将该文件保存“D:\csgame\commoncode”目录下。用法为：</p>
+数x = RandomSort(数组y );
+源代码 4 CommonSH.cs文件的内容
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="position:relative">
+  <tr>
+    <td width="55%">
+    <div id="ol"><textarea cols="2" rows="30" id="li3" class="lineno" disabled></textarea></div>
+    <textarea name="co" cols="60" rows="30" wrap="off" id="c23"  onblur="check('2')" onkeyup="keyUp()" onFocus="clearValue('2')" onscroll="G('li3').scrollTop = this.scrollTop;" oncontextmenu="return false"  class="grey" disabled>
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MemoryChecker
+{
+    class CommonSH
+    {
+        public static T[] RandomSort<T>(T[] array)
+        {
+            int len = array.Length;
+            System.Collections.Generic.List<int> list = new System.Collections.Generic.List<int>();
+            T[] ret = new T[len];
+            Random rand = new Random();
+            int i = 0;
+            while (list.Count < len)
+            {
+                int iter = rand.Next(0, len);
+                if (!list.Contains(iter))
+                {
+                    list.Add(iter);
+                    ret[i] = array[iter];
+                    i++;
+                }
+            }
+            return ret;
+        }
+    }
+}
+</textarea>    
+    </td>
+    </tr>
+</table>
+<p class = "iteml1">2)	在项目中添加该文件。</p>
+<p class = "iteml2">i.	在解决方案资源管理器中，选中项目“MemoryChecker”，点击右键，选择右键菜单中的添加->现有项。如图CSG 20所示。</p>
+ <p><img src="image/" alt = "图CSG 20"/><br/>
+<div class="picnote">图CSG 20</div></p>
+<p class = "iteml2">ii.	在弹出的对话框中，选择“D:\csgame\commoncode”目录的“CommonSH.cs”文件，点击添加按钮后看到该文件出现在解决方案资源管理器中项目“MemoryChecker”下面。</p>
+ <p><img src="image/" alt = "图CSG 21"/><br/>
+<div class="picnote">图CSG 21</div></p>
+<p class = "iteml1">3)	回到Form1.cs的代码视图，修改initPics方法。在源代码2的第2行之后添加新行。加入一个整数数组 bb,用来存放打乱后的下标，如源代码 5 所示，注意当调用其他类的方法时，要在方法前面加上该类的名称；另外将源代码2的第16行中的aa改为bb，如源代码 6 所示。</p>
+源代码 5 initPics方法添加的内容
+1	          int[] bb = CommonSH.RandomSort(aa) ;  
+
+源代码 6 initPics方法改动的内容
+1	                pList[i].Image = mm[bb[i]];
+
+<div class ="section"><a name="#a21">2.4	运行结果</a></div>
+如图CSG 22所示。可以多次运行，查看到每次显示的结果是不同的，这便是随机打乱后的图片排列情况，接下来，在窗体初始状态下，要将图片翻回到背面，只有当用户点击该图片的时候才显示正面。
+ <p><img src="image/" alt = "图CSG 22 随机排列的图片"/><br/>
+<div class="picnote">图CSG 22 随机排列的图片</div></p>
+              
+
+ 
+</div>
+
+<script language="javascript" type="text/javascript">
+var msgA=["msg1","msg2","msg3","msg4"];
+var c=["c1","c2","c3","c4"];
+var slen=[50,20000,20000,60];//允许最大字数
+var num="";
+var isfirst=[0,0,0,0,0,0];
+var lix = "li";
+function isEmpty(strVal){
+ if( strVal == "" )
+  return true;
+ else
+  return false;
+}
+function isBlank(testVal){  
+    var regVal=/^\s*$/;
+    return (regVal.test(testVal))
+}
+function chLen(strVal){
+ strVal=strVal.trim2();
+ var cArr = strVal.match(/[^\x00-\xff]/ig);
+    return strVal.length + (cArr == null ? 0 : cArr.length);    
+}
+function check(i){
+ var iValue=F("c"+i);
+ var iObj=G("msg"+i);
+ var n=(chLen(iValue)>slen[i-1]);
+ if((isBlank(iValue)==true)||(isEmpty(iValue)==true)||n==true){  
+  iObj.style.display ="block";
+ }else{  
+  iObj.style.display ="none";
+ }
+}
+function checkAll(){
+ for(var i=0;i<msgA.length; i++){
+  check(i+1);  
+  if(G(msgA[i]).style.display=="none"){
+   continue;
+  }else{
+   alert("填写错误,请查看提示信息！");
+   return;
+  }
+ }
+ G("form1").submit(); 
+}
+function clearValue(i){
+ G(c[i-1]).style.color="#000";
+ keyUp(); 
+ if(isfirst[i]==0){
+  G(c[i-1]).value="";
+ }
+ isfirst[i]=1;
+}
+function onloadcode(){
+ var obj=G("c21");
+ var str=obj.value; 
+ str=str.replace(/\r/gi,"");
+ str=str.split("\n");
+ n=str.length;
+ line(n,"li1");
+
+ obj=G("c22");
+ str=obj.value; 
+ str=str.replace(/\r/gi,"");
+ str=str.split("\n");
+ n=str.length;
+ line(n,"li2");
+
+ obj=G("c23");
+ str=obj.value; 
+ str=str.replace(/\r/gi,"");
+ str=str.split("\n");
+ n=str.length;
+ line(n,"li3");
+}
+function line(n,ss){
+ var lineobj=G(ss);
+ for(var i=1;i<=n;i++){
+  if(document.all){
+   num+=i+"\r\n";
+  }else{
+   num+=i+"\n";
+  }
+ }
+ lineobj.value=num;
+ num="";
+}
+
+function keyUp(){
+ var obj=G("c2");
+ var str=obj.value; 
+ str=str.replace(/\r/gi,"");
+ str=str.split("\n");
+ n=str.length;
+ line(n);
+}
+function line(n){
+ var lineobj=G("li");
+ for(var i=1;i<=n;i++){
+  if(document.all){
+   num+=i+"\r\n";
+  }else{
+   num+=i+"\n";
+  }
+ }
+ lineobj.value=num;
+ num="";
+}
+ function autoScroll(){
+ var nV = 0;
+ if(!document.all){
+  nV=G("c2").scrollTop;
+  G("li").scrollTop=nV;
+  setTimeout("autoScroll()",20);
+ } 
+}
+if(!document.all){
+window.addEventListener("load",autoScroll,false);
+}
+</script>
+</body>
+</html>

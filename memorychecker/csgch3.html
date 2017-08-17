@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head> 
+<title> C# 图片记忆力测试游戏教程——第三章 点击图片控件，切换图片的正反面</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="SH">
+  <meta name="Keywords" content="C#, 游戏,编程，图片记忆力测试,入门教程，图片控件，点击事件，事件处理">
+  <meta name="Description" content="C# 图片记忆力测试游戏教程概要说明，介绍图片控件点击事件处理和代码优化">
+<link href="css/menustyles.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="allsrc()">
+<div id="header"> 
+	<div class="topic">C# 图片记忆力测试游戏教程</div>
+	<div class="banner">3	点击图片控件，切换图片的正反面</div>
+</div>
+
+<div id="main-nav">
+	<ul>
+		<li><a href="index.html">关于</a></li>
+		<li><a href="csgch1.html">第一章</a></li>
+		<li><a href="csgch2.html">第二章</a></li>
+		<li class="active">第三章</a></li>
+		<li><a href="csgch4.html">第四章</a></li>
+		<li><a href="csgch5.html">第五章</a></li>
+		<li><a href="csgch6.html">第六章</a></li>
+		<li><a href="csglearn.html">教学设计</a></li>
+		<li><a href="csggame.html">游戏说明</a></li>
+	</ul>
+	<div class="clear-both">&nbsp;</div>
+</div>
+
+
+<div id="content">
+<div id="indexbox"> 
+<div   id="boxheader">内容列表</div> 
+<div   id="boxcontent"> 
+<a href="#a31">3.1	初始状态回到全部背面图片的界面</a><br/>
+<a href="#a32">3.2	为第一个图片添加按钮点击事件，点击一次即可打开正面图片</a><br/>
+<a href="#a33">3.3	运行结果</a><br/>
+<a href="#a34">3.4	连续点击第一个图片控件可在背面和正面图片之间切换</a><br/>
+<a href="#a35">3.5	所有的图片控件连续点击都可以切换背面和正面图片</a><br/>
+<a href="#a36">3.6	图片控件点击事件处理的优化</a><br/>
+<a href="#a37">3.7	小结与技巧</a><br/>
+</div> 
+</div>
+<a name="a31"></a><div class ="section">3.1	初始状态回到全部背面图片的界面。</div>
+在Form1.cs中找到图片控件赋值的语句，将它注释掉。如源代码 7 所示。
+<div class = "srcnote">源代码 7 Form1.cs中注释掉的语句</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src7l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src7" style="overflow:hidden" disabled >
+// pList[i].Image = mm[bb[i]];
+</textarea>
+</td></tr></table>
+
+<div class ="section"><a name="a32">3.2	为第一个图片添加按钮点击事件，点击一次即可打开正面图片</a></div>
+<p class = "iteml1">1)	在Form1.cs设计视图下双击第一个图片控件pb1，即可在Form1.cs文件的末尾自动添加一个空方法pb1_Click。如源代码 8 所示。</p>
+<div class = "srcnote">源代码 8 方法pb1_Click</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="3" wrap="off"  style="overflow:hidden" id = "src8l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="3" wrap="off"  id="src8" style="overflow:hidden" disabled >
+private void pb1_Click(object sender, EventArgs e)
+        {
+        }
+</textarea>
+</td></tr></table>
+<p class = "iteml1">2)	参考源代码7，可以在方法pb1_Click中添加对第一个pb1的Image属性进行赋值的语句，如源代码 8 所示。</p>
+问题：运行一下，发现有编译错误，
+思考：为什么简单地挪了个地方就出现问题呢？
+<div class = "srcnote">源代码 9方法pb1_Click添加的语句</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src9l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src9" style="overflow:hidden" disabled >
+pList[0].Image = mm[bb[0]];
+</textarea>
+</td></tr></table>
+
+在代码视图中观察，可以发现pList、mm、bb这三个变量下面有蓝色波浪线，原来是变量的作用域的问题。 这3个变量在方法initPics进行声明定义，出了initPics管辖的大括号，就不能起作用了，要让它们既在方法initPics中可用，又在方法pb1_Click中可用，可以将它们拿出来，从某个方法内有效的局部变量，变成一个类范围内有效的成员变量。
+<p class = "iteml1">3)	将变量pList、mm、bb数组的申请移出到class的范围下。即在源代码1的第12行之后添加如源代码10所示的3行。</p>
+<div class = "srcnote">源代码 10 Form1.cs添加的内容</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="3" wrap="off"  style="overflow:hidden" id = "src10l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="3" wrap="off"  id="src10" style="overflow:hidden" disabled >
+int[] bb;
+Image[] mm;
+PictureBox[] pList;
+</textarea>
+</td></tr></table>
+<p class = "iteml1">4)	去除initPics方法中pList、mm、bb这三个变量的声明部分，只留下初始化部分，改变后initPics方法的内容如源代码11所示。其中第4、5、15行为改动的行。</p>
+问题：这时发现mm、pList后面的大括号中的内容出现很多红色波浪线，表示有错误。
+思考：为什么合起来对的，分开来就错呢？
+<div class = "srcnote">源代码 11 改变后的initPics方法</div>
+<table   class="codebox"><tr><td class="lines"> 
+<textarea  cols="4" rows="21" wrap="off"  style="overflow:hidden" id = "src11l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="21" wrap="off"  id="src11" style="overflow:hidden" disabled >
+void initPics()
+        {
+            int[] aa = { 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7};
+            bb = CommonSH.RandomSort(aa) ;  
+            mm = {//改动
+                MemoryChecker.Properties.Resources.m1,
+                MemoryChecker.Properties.Resources.m2,
+                MemoryChecker.Properties.Resources.m3,
+                MemoryChecker.Properties.Resources.m4,
+                MemoryChecker.Properties.Resources.m5,
+                MemoryChecker.Properties.Resources.m6,
+                MemoryChecker.Properties.Resources.m7,
+                MemoryChecker.Properties.Resources.m8
+            };
+            pList = { //改动
+pb1, pb2, pb3, pb4, pb5, pb6, pb7, pb8, pb9, pb10, pb11, pb12, pb13, pb14, pb15, pb16 };
+            for (int i = 0; i < 16; i++)
+            {
+               // pList[i].Image = mm[bb[i]];
+            }
+        }
+</textarea>
+</td></tr></table>
+在如源代码11的第5行、第15行的等号右边分别加上new Image[8]和new PictureBox[16] ，可以解决这个问题。思考：为什么第3行的等号右边可以加new int[16]，也可以不加呢？加和不加又什么区别呢？请参阅数组的声明、初始化、赋值语法。
+<div class ="section"><a name="a33">3.3	运行结果</a></div>
+运行程序，并点击第一个背面图片，可以显示一个随机的正面图片，如图CSG 23所示。
+ <p><img src="image/csg23_displayoneimage.png" alt = "图CSG 23" width="373px"  height="395px"/><br/>
+<div class="picnote">图CSG 23</div></p>
+
+<div class ="section"><a name="a34">3.4	连续点击第一个图片控件可在背面和正面图片之间切换。</a></div>
+<p class = "iteml1">1)	添加对图片控件显示的图片的记录。</p>
+思考： 什么样的数据类型比较适合做此类记录？
+每个图片控件在点击之后会有两个状态，正面或背面，可以用一个bool类型的数组flaglist来记录，假设true为背面，false为正面。更新后Form1.cs 的内容如源代码 12所示。
+<p class = "iteml2">i.	在Form1类中添加变量flaglist。如源代码 12所示的第16行。</p>
+<p class = "iteml2">ii.	在Form1类的构造方法中添加flaglist的初始化。因为一开始，图片都是背面的，所以flaglist数组的元素初始值都是true。可以象初始化aa数组那样将所有的值挨个写出来，也可以利用for循环来对每个元素赋同一个值来做，在代码的书写上，后者可以提高效率，尤其是初始值在开发过程中可能会发生变化的情况下。如源代码 12所示的第21~23行。</p>
+<p class = "iteml2">iii.	在pb1_Click方法中修改代码，使得连续点击同一张图片控件，可以在背面和正面之间切换。如源代码 12所示的第50-58行。</p>
+<div class = "srcnote">源代码 12  添加flaglist后的Form1.cs</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="60" wrap="off"  style="overflow:hidden" id = "src12l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="60" wrap="off"  id="src12" style="overflow:hidden" disabled >
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MemoryChecker
+{
+    public partial class Form1 : Form
+    {
+        int[] bb;
+        Image[] mm;
+        PictureBox[] pList;
+        bool[] flaglist = new bool[16];
+
+        public Form1()
+        {
+            InitializeComponent();
+            for (int i = 0; i < 16; i++) {
+                flaglist[i] = true;
+            }
+            initPics();
+        }
+        void initPics()
+        {
+            int[] aa = new int[16]{ 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7};
+            bb = CommonSH.RandomSort(aa) ;  
+            mm = new Image[8]{
+                MemoryChecker.Properties.Resources.m1,
+                MemoryChecker.Properties.Resources.m2,
+                MemoryChecker.Properties.Resources.m3,
+                MemoryChecker.Properties.Resources.m4,
+                MemoryChecker.Properties.Resources.m5,
+                MemoryChecker.Properties.Resources.m6,
+                MemoryChecker.Properties.Resources.m7,
+                MemoryChecker.Properties.Resources.m8
+            };
+            pList = new PictureBox[16]{ pb1, pb2, pb3, pb4, pb5, pb6, pb7, pb8, pb9, pb10, pb11, pb12, pb13, pb14, pb15, pb16 };
+            for (int i = 0; i < 16; i++)
+            {
+               // pList[i].Image = mm[bb[i]];
+            }
+        }
+
+        private void pb1_Click(object sender, EventArgs e)
+        {
+            if (flaglist[0] == true)
+            {
+                pList[0].Image = mm[bb[0]];
+            }
+            else
+            {
+                pList[0].Image =   MemoryChecker.Properties.Resources.cover;
+            }
+            flaglist[0] = !flaglist[0];
+        }
+    }
+}
+</textarea>
+</td></tr></table>
+<div class ="section"><a name="a35">3.5	所有的图片控件连续点击都可以切换背面和正面图片。</a></div>
+<p class = "iteml1">1)	在设计视图下，点击所有图片，使得自动生成其余15个点击事件的方法pb2_Click~pb16_Click。</p>
+<p class = "iteml1">2)	回到代码视图，观察pb1_Click，如果里面的代码放到pb2_Click中，只需要将数组元素的位置由0改成1。</p>
+<p class = "iteml1">3)	Form1类中添加一个带有整数型参数pbi的方法pbClick, 将pb1_Click中的代码放到pbClick中，并将其中的数组元素位置索引，即方括号里面的内容0改为pbi，在pb1_Click方法中，调用pbClick，参数为0；</p>
+<p class = "iteml1">4)	在其余15个图片控件的点击事件方法中，调用pbClick，参数分别为1~15；</p>
+<p class = "iteml1">5)	完成后Form1.cs中图片控件点击事件的处理代码如源代码13所示。</p>
+<div class = "srcnote">源代码 13 图片控件点击事件的处理代码</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="78" wrap="off"  style="overflow:hidden" id = "src13l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="78" wrap="off"  id="src13" style="overflow:hidden" disabled >
+ private void pbClick(int pbi)
+        {
+            if (flaglist[pbi] == true)
+            {
+                pList[pbi].Image = mm[bb[pbi]];
+            }
+            else
+            {
+                pList[pbi].Image = MemoryChecker.Properties.Resources.cover;
+            }
+            flaglist[bi] = !flaglist[pbi];
+        }
+        private void pb1_Click(object sender, EventArgs e)
+        {
+            pbClick(0);
+        }
+        private void pb2_Click(object sender, EventArgs e)
+        {
+            pbClick(1);
+        }
+        private void pb3_Click(object sender, EventArgs e)
+        {
+            pbClick(2);
+        }
+        private void pb4_Click(object sender, EventArgs e)
+        {
+            pbClick(3);
+        }
+        private void pb5_Click(object sender, EventArgs e)
+        {
+            pbClick(4);
+        }
+        private void pb6_Click(object sender, EventArgs e)
+        {
+            pbClick(5);
+        }
+        private void pb7_Click(object sender, EventArgs e)
+        {
+            pbClick(6);
+        }
+        private void pb8_Click(object sender, EventArgs e)
+        {
+            pbClick(7);
+        }
+        private void pb9_Click(object sender, EventArgs e)
+        {
+            pbClick(8);
+        }
+        private void pb10_Click(object sender, EventArgs e)
+        {
+            pbClick(9);
+        }
+        private void pb11_Click(object sender, EventArgs e)
+        {
+            pbClick(10);
+        }
+        private void pb12_Click(object sender, EventArgs e)
+        {
+            pbClick(11);
+        }
+        private void pb13_Click(object sender, EventArgs e)
+        {
+            pbClick(12);
+        }
+        private void pb14_Click(object sender, EventArgs e)
+        {
+            pbClick(13);
+        }
+        private void pb15_Click(object sender, EventArgs e)
+        {
+            pbClick(14);
+        }
+        private void pb16_Click(object sender, EventArgs e)
+        {
+            pbClick(15);
+        }
+    }
+}
+</textarea>
+</td></tr></table>
+思考： 观察16个图片控件的点击事件的处理，图片控件点击事件各自处理，代码看上去十分冗长，但又非常相似，如何来进行优化呢？
+<div class ="section"><a name="a36">3.6	图片控件点击事件处理的优化</a></div>
+<p>分析对象和所要实现的功能，找出其中的共性和规律，进行适当的封装，既能简化代码，也能在后续维护中减少工作量。</p>
+<p>pbClickAllInOne方法的设计思路如下：让所有的图片控件点击事件处理指向同一个方法pbClickAllInOne，在方法pbClickAllInOne中，需要找到图片控件的序号，传递给方法pb_Click进行处理。进一步思考，在该方法中需要有一个参数（突破点）来指代是哪个图片控件，然后根据该图片控件和图片控件的序号之间的联系（突破点）来找到图片控件的序号，再将图片控件的序号作为参数取值（突破点）调用方法pb_Click进行处理。</p>
+<p>从以上3个突破点入手，可以得到pbClickAllInOne方法的设计框图如图CSG 24所示。 </p>
+ <p><img src="image/csg24_pbClickAllInOne.png" alt = "图CSG 24 图片控件点击事件的设计框图" width="655px"  height="446px"/><br/>
+<div class="picnote">图CSG 24 图片控件点击事件的设计框图</div></p>
+<p class = "iteml1">1)	首先将所有图片控件的点击事件处理全部改为一个新的处理方法pbClickAllInOne。</p>
+<p class = "iteml2">i.	回到Form1设计视图，选中第一个图片控件，打开属性页，切换到事件列表，在Click 处，将原来的pb1_Click改为pbClickAllInOne， 如图CSG25所示。会在Form1.cs中产生一个空的pbClickAllInOne方法如源代码14所示。  </p>
+ <p><img src="image/csg25_changeClickevent.png" alt = "图CSG 25" width="906px"  height="601px"/><br/>
+<div class="picnote">图CSG 25</div></p>
+
+<div class = "srcnote">源代码 14 新添加的空方法pbClickAllInOne</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="3" wrap="off"  style="overflow:hidden" id = "src14l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="3" wrap="off"  id="src14" style="overflow:hidden" disabled >
+ private void pbClickAllInOne(object sender, EventArgs e)
+{
+}
+</textarea>
+</td></tr></table>
+<p class = "iteml2">ii.	参照步骤#a, 将其余15个图片控件的Click 事件处理都改为pbClickAllInOne。</p>
+<p class = "iteml1">2)	为方法pbClickAllInOne添加内容</p>
+<div class = "srcnote">源代码 15</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="7" wrap="off"  style="overflow:hidden" id = "src15l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="7" wrap="off"  id="src15" style="overflow:hidden" disabled >
+         private void pbClickAllInOne(object sender, EventArgs e)
+        {
+            PictureBox pbX = (PictureBox)sender;
+            String pbName = pbX.Name;
+            int pbi = Convert.ToInt16(pbName.Substring(2, pbName.Length - 2))-1;
+            pbClick(pbi);
+        }
+</textarea>
+</td></tr></table>
+<p class = "iteml1">3)	删除已经没有使用的pb1_Click ~ pb16_Click 方法。</p>
+<div class ="section"><a name="a37">3.7	小结与技巧</a></div>
+ <p>将在近日完成，欢迎回来</p>
+
+ <p/>
+<hr/>
+<div id="foot">&copy; room-365.com sh 2011 China</div>
+
+</div>
+
+<script>
+function allsrc(){
+	wline("src7"); 
+	wline("src8"); 
+	wline("src9"); 
+	wline("src10"); 
+	wline("src11"); 
+	wline("src12"); 
+	wline("src13"); 
+	wline("src14"); 
+	wline("src15"); 
+}
+var num="";
+function wline(srcx){
+	 var obj= document.getElementById(srcx);//G(srcx);
+	 var str=obj.value; 
+	 str=str.replace(/\r/gi,"");
+	 str=str.split("\n");
+	 var len=str.length;
+	 line(len,srcx+"l");
+}
+function line(n,srcxl){
+   var lineobj= document.getElementById(srcxl);//G(srcxl);
+   for(var i=1;i<n;i++){
+	  if(document.all){
+	   num+=i+"\r\n";
+	  }else{
+	   num+=i+"\n";
+	  }
+	}
+	lineobj.value=num;
+ 	num=""; 
+}
+</script>
+</body>
+</html>

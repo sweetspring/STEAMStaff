@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head> 
+<title> C# 图片记忆力测试游戏教程——第六章 友好的界面</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="SH">
+  <meta name="Keywords" content="C#, 游戏,编程，图片记忆力测试,入门教程,游戏效果，动画，延迟，线程，定时器，欢迎界面">
+  <meta name="Description" content="C# 图片记忆力测试游戏教程之游戏效果的改进，介绍动画制作，线程处理，定时器">
+<link href="css/menustyles.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="allsrc()">
+<div id="header"> 
+	<div class="topic">C# 图片记忆力测试游戏教程</div>
+	<div class="banner">6	友好的界面</div>
+</div>
+
+<div id="main-nav">
+	<ul>
+		<li><a href="index.html">关于</a></li>
+		<li><a href="csgch1.html">第一章</a></li>
+		<li><a href="csgch2.html">第二章</a></li>
+		<li><a href="csgch3.html">第三章</a></li>
+		<li><a href="csgch4.html">第四章</a></li>
+		<li><a href="csgch5.html">第五章</a></li>
+		<li class="active">第六章</li>
+		<li><a href="csglearn.html">教学设计</a></li>
+
+		<li><a href="csggame.html">游戏说明</a></li>
+	</ul>
+	<div class="clear-both">&nbsp;</div>
+</div>
+
+
+
+<div id="content">
+
+<div id="indexbox"> 
+<div   id="boxheader">内容列表</div> 
+<div   id="boxcontent"> 
+ <a href="#a61">6.1	加入菜单 </a><br/>
+<a href="#a62">6.2	书写帮助和游戏说明	 </a><br/>
+<a href="#a63">6.3	反应速度的设置	 </a><br/>
+<a href="#a64">6.4	小结与技巧 </a><br/>
+</div> 
+</div>
+
+接下来做一些外围的说明工作。这部分工作比较简单，可以和第4章结合起来放在一次课中来做。
+<div class ="section"><a name="a61"></a>6.1	加入菜单</div>
+<p class = "iteml1">1)	从工具箱中找到MenuStrip，拖到窗体Form1上。MenuStrip也是不可见控件。</p>
+<p class = "iteml1">2)	键入第1个菜单项名字为“帮助”，第2个菜单项名字为“游戏设置”。</p>
+<p class = "iteml1">3)	打开第1个菜单项“帮助”属性页，将其“Name”属性改为“mainMenu_Help”， 确认其“Text”属性为“帮助”。如果第一行图片控件挡住了菜单，就将所有图片控件往下一点。此处也可以看出菜单类型的说明影响游戏界面的美观，以后可以用右边面板，工具栏，右键菜单等替代。</p>
+<p class = "iteml1">4)	为“帮助”菜单添加两个子菜单，分别键入名字“游戏说明”和“关于”</p>
+<p class = "iteml2">i.	第1个子菜单其“Name”属性改为“subMenu_Help_Info”， 确认其“Text”属性为“游戏说明”，设置“ShortcutKeys”属性为“Ctrl+I”，“ShowShortcutKeys”属性为“true”；</p>
+<p class = "iteml2">ii. 第2个子菜单其“Name”属性改为“subMenu_Help_About”， 确认其“Text”属性为“关于”。</p>
+<p class = "iteml1">5)	打开第2个菜单项“游戏设置”属性页，，将其“Name”属性改为“mainMenu_Settings”， 确认其“Text”属性为“游戏设置”。</p>
+<p class = "iteml1">6)	为“游戏设置”菜单添加两个子菜单，键入名字“反应速度”，设置“ShortcutKeys”属性为“Ctrl+T”，“ShowShortcutKeys”属性为“true”；</p>
+<p class = "iteml1">7)	在设计视图分别点击“游戏说明”、“关于”、“反应速度”3个子菜单项。在Form1类中自动添加生成3个空方法subMenu_Help_Info_Click、subMenu_Help_About_Click和subMenu_Settings_Speed_Click。</p>
+<div class ="section"><a name="a6"></a>6.2	 书写帮助和游戏说明</div>
+暂时简化处理，用MessageBox 来显示游戏说明和信息，添加内容后的subMenu_Help_Info_Click和subMenu_Help_About_Click方法如源代码32所示。
+<div class = "srcnote">源代码 32</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src32l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src32" style="overflow:hidden" disabled >
+        private void subMenu_Help_Info_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("图片记忆力测试游戏：窗体初始状态显示为4行4列共16个图片背面，点击找出两张相同的正面图片，\n如果两张相同正面图片在一定的时间内被连续打开，可以一直显示，否则将被背面图片覆盖");
+        }
+
+        private void subMenu_Help_About_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("本游戏为C#初学者设计编写。\n作者：sh");
+        }
+</textarea>
+</td></tr></table>
+当游戏比较复杂时，可以书写比较长的帮助文档，编译成.chm或hlp等帮助文件来进行说明，关于帮助文件的制作将在近日完成，欢迎回来。
+<div class ="section"><a name="a63"></a>6.3	反应速度的设置</div>
+以反应速度为例，进行游戏参数的设置。
+<p class = "iteml1">1)	在memorychecker 项目下新建窗体 Form3;</p>
+<p class = "iteml1">2)	从工具箱拖3个标签（Lable）、1个滑动条（TrackBar）、2个按钮(Button)到Form3，布局如图CSG28所示。</p>
+ <p><img src="image/csg28_form3.png" alt = "图CSG 28" width="315px" height="237px"/><br/>
+<div class="picnote">图CSG 28</div></p>
+<p class = "iteml1">3)	改变各控件的属性，如表格3所示</p>
+<div class = "srcnote">表格 3 各控件的属性</div>
+<table border="1px"  width="700px"><tr><td  width = "100px">
+控件</td><td  width = "100px">		属性</td><td  width = "100px">		值</td></tr><td  width = "100px">
+Label1</td><td  width = "100px">		Text</td><td  width = "100px">		反应速度：</td></tr><td  width = "100px">
+Label2</td><td  width = "100px">		Text</td><td  width = "100px">		高</td></tr><td  width = "100px">
+Label3</td><td  width = "100px">		Text</td><td  width = "100px">		低</td></tr><td  width = "100px">
+Button1</td><td  width = "100px">		Text</td><td  width = "100px">		确定</td></tr><td  width = "100px">
+Button2</td><td  width = "100px">		Text</td><td  width = "100px">		取消</td></tr><td  width = "100px">
+TrackBar1</td><td  width = "100px">		Minimum</td><td  width = "100px">		1</td></tr><td  width = "100px">
+TrackBar1</td><td  width = "100px">		Maximum</td><td  width = "100px">		10</td></tr><td  width = "100px">
+Form3</td><td  width = "100px">		Text</td><td  width = "100px">		游戏参数设置</td></tr></table>
+改动后Form3界面如图CSG 29所示。
+ <p><img src="image/csg29_form3modified.png" alt = "图CSG 28" width="315px" height="237px"/><br/>
+<div class="picnote">图CSG 29</div></p>
+<p class = "iteml1">4)	为了保存设置，在CommonSH类中增加一个变量，即源代码4的第27行之后添加如源代码33所示的一行。</p>
+<div class = "srcnote">源代码 33 CommonSH类新加的变量speed</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src33l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src33" style="overflow:hidden" disabled >
+public static int speed = 1;
+</textarea>
+</td></tr></table>
+<p class = "iteml1">5)	在Form2的构造函数末尾中添加对trackBar1的初始化，即在Form3显示时，滑动条指到它的值所对应的位置。如源代码34所示</p>
+<div class = "srcnote">源代码 34</div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src34l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src34" style="overflow:hidden" disabled >
+trackBar1.Value = CommonSH.speed;
+</textarea>
+</td></tr></table>
+<p class = "iteml1">6)	在Form2中分别双击button1和button2，添加Click事件处理；如源代码35所示</p>
+<div class = "srcnote">源代码 35 </div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="10" wrap="off"  style="overflow:hidden" id = "src35l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="10" wrap="off"  id="src35" style="overflow:hidden" disabled >
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CommonSH.speed = trackBar1.Value;//设置断点调试
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+</textarea>
+</td></tr></table>
+<p class = "iteml1">7)	在Form1中为subMenu_Settings_Speed_Click方法添加内容，改动后的方法如源代码36所示。</p>
+<div class = "srcnote">源代码 36 方法subMenu_Settings_Speed_Click </div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="7" wrap="off"  style="overflow:hidden" id = "src36l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="7" wrap="off"  id="src36" style="overflow:hidden" disabled >
+	        private void subMenu_Settings_Speed_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            Form3 frm_setting = new Form3();
+            frm_setting.Show();
+            timer1.Interval = CommonSH.speed * 200; //设置断点调试
+        }
+</textarea>
+</td></tr></table>
+运行程序，发现游戏设置不能立即生效，这是为什么呢？在源代码36的第3行和源代码37的第6行设置断点进行调试，timer1在设置Interval的时，滑动条的值其实还没来得及改变，所以它设置的是前一次打开游戏设置窗体设置的滑动条值。体会一下窗体的Show和Close方法，源代码37的第6行不是等窗体3关闭才执行的。
+
+这个问题如何解决呢？怎样才能在滑动条的值改变后才设置timer1的Interval，一个办法是
+<p class = "iteml1">1)	Form1中新加一个设置timer1的Interval的公共方法setTimer1</p>
+<p class = "iteml1">2)	为Form3增加一个Form1类的变量paretfrm, 在Form3中的构造函数中进行初始化</p>
+<p class = "iteml1">3)	改变Form3的构造函数，增加一个Form1类的参数paretfrm</p>
+<p class = "iteml1">4)	在Form1的菜单点击事件处理中，将Form1类对象由Form3的构造函数传递给Form3对象。    </p>
+Form1中新添加的setTimer1方法和改动后的subMenu_Settings_Speed_Click方法如源代码 37 所示。
+<div class = "srcnote">源代码 37 Form1中新添加的setTimer1方法和改动后的subMenu_Settings_Speed_Click方法 </div>
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src37l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src37" style="overflow:hidden" disabled >
+       private void subMenu_Settings_Speed_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            Form3 frm_setting = new Form3(this);
+            frm_setting.Show();
+
+        }
+        public void setTimer1() {
+            timer1.Interval = CommonSH.speed * 200;
+        }
+</textarea>
+</td></tr></table>
+ Form3.cs文件的内容如源代码38所示。
+ <div class = "srcnote">源代码 38</div>
+
+<table   class="codebox"><tr><td class="lines"  > 
+<textarea  cols="4" rows="1" wrap="off"  style="overflow:hidden" id = "src38l" disabled></textarea> 
+</td><td  class = "code" >
+<textarea  cols="100" rows="1" wrap="off"  id="src38" style="overflow:hidden" disabled >
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+
+
+namespace MemoryChecker
+{
+    public partial class Form3 : Form
+    {
+        Form1 callerfrm;
+        public Form3(Form1 callerfrm)
+        {
+            InitializeComponent();
+            trackBar1.Value = CommonSH.speed;
+            this.callerfrm = callerfrm;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CommonSH.speed = trackBar1.Value;
+            callerfrm.setTimer1();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+}
+</textarea>
+</td></tr></table>
+运行一下，现在游戏比较齐整了。
+
+思考，该变量的改变能在程序运行期间有效，但当游戏重新运行，上一次对反应速度的设置将无效，如何使其在下一次运行时还有效呢？答案是需要使用参数文件或者数据库来保存，在下一次游戏初始化时，读入参数设置。本教程不再展开。
+<div class ="section"><a name="a64"></a>6.4	小结与技巧</div>
+思考：是否能设置不同的游戏界面（比如布局为5*5个图片）、又如何设置游戏级别呢，这些问题留给各位思考先。
+花了将近一周时间，本教程暂告一段落，因为写教程非常花时间，迟迟未能动笔，游戏虽然简单，在编写过程中也有新的发现和所得。
+学无止境，和各位共勉。
+
+
+ <p/>
+<hr/>
+<div id="foot">&copy; room-365.com sh 2011 China</div>
+
+</div>
+
+
+<script>
+function allsrc(){
+	wline("src32"); 
+	wline("src33"); 
+	wline("src34"); 
+	wline("src35"); 
+	wline("src36"); 
+	wline("src37"); 
+	wline("src38"); 
+}
+var num="";
+function wline(srcx){
+	 var obj= document.getElementById(srcx);//G(srcx);
+	 var str=obj.value; 
+	 str=str.replace(/\r/gi,"");
+	 str=str.split("\n");
+	 var len=str.length;
+	 line(len,srcx+"l");
+}
+function line(n,srcxl){
+   var lineobj= document.getElementById(srcxl);//G(srcxl);
+   for(var i=1;i<n;i++){
+	  if(document.all){
+	   num+=i+"\r\n";
+	  }else{
+	   num+=i+"\n";
+	  }
+	}
+	lineobj.value=num;
+ 	num=""; 
+}
+</script>
+</body>
+</html>
