@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>按处理顺序排列图片</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"
+	name="viewport">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<script src="js/jquery-2.1.1.min.js"></script>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+@media ( max-width : 600px) { /* 这里面写css样式 */
+}
+
+@media ( min-width : 320px) { /* 这里面写css样式 */
+}
+
+.info {
+	font-size: 18px;
+}
+
+.mybutton {
+	font-size: 18px;
+	width: 60px;
+	height: 30px
+}
+
+.divblock {
+	width: 97px;
+	height: 160px;
+	padding: 1px;
+	border: 1px solid #aaaaaa;
+	float: left;
+	margin: 0 0 0 0;
+}
+
+.left1 {
+	margin-left: 0px;
+}
+
+.one-third {
+	float: left;
+	width: 100px;
+	height: 150px;
+	margin-right: 2px;
+	padding: 2px;
+	border: 1px solid #aaaaaa;
+}
+
+.image {
+	width: 95px;
+	height: 130px;
+}
+
+.column {
+	display: block;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+.column div:last-child {
+	margin-right: 0%;
+}
+
+.column div:first-child {
+	margin-left: 0%;
+}
+
+.divblock1 {
+	-webkit-transform: translate(0px, 0px);
+	-moz-transform: translate(0px, 0px);
+	transform: translate(0px, 0px);
+}
+
+}
+.divblock2 {
+	-webkit-transform: translate(0px, 0px);
+	-moz-transform: translate(0px, 0px);
+	transform: translate(0px, 0px);
+}
+
+}
+.divblock3 {
+	-webkit-transform: translate(0px, 0px);
+	-moz-transform: translate(0px, 0px);
+	transform: translate(0px, 0px);
+}
+
+}
+.divblock4 {
+	-webkit-transform: translate(0px, 0px);
+	-moz-transform: translate(0px, 0px);
+	transform: translate(0px, 0px);
+}
+
+}
+.divblock5 {
+	-webkit-transform: translate(0px, 0px);
+	-moz-transform: translate(0px, 0px);
+	transform: translate(0px, 0px);
+}
+}
+</style>
+<script>
+	var meaningintro = new Array("抱孩子：家庭", "看谁在门外：亲友", "接电话：事业", "关掉水龙头：财富",
+			"收衣服：性");
+	var meaning = new Array("家庭", "亲友", "事业", "财富", "性");
+
+	function allowDrop(ev) {
+		ev.preventDefault();
+	}
+
+	function drag(ev) {
+		ev.dataTransfer.setData("Text", ev.target.id);
+	}
+
+	function drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("Text");
+		ev.target.appendChild(document.getElementById(data));
+	}
+	function getResult() {
+		var pics = new Array("div1", "div2", "div3", "div4", "div5");
+		var obj, idname;
+		var message = "采取行动对应的意义为：<br/><br/>";
+		var orders = "你心里的重要次序为：";
+		for (var i = 0; i < pics.length; i++) {
+			obj = document.getElementById(pics[i]).children[0];
+			idname = obj.getAttribute("id").substring(4, 5);
+			message = message + "【" + idname + "】" + meaningintro[idname - 1]
+					+ "<br/>";
+			orders = orders + ">>" + meaning[idname - 1];
+		}
+		message = message + "<br/>准吧，快分享给亲友测试一下~~";
+		document.getElementById("result").innerHTML = orders + "<br/><br/>"
+				+ message;
+
+	}
+
+	function reset() {
+
+		window.location.reload();
+
+	}
+
+	function touchHandler(event) {
+		var touches = event.changedTouches, first = touches[0], type = "";
+		switch (event.type) {
+		case "touchstart":
+			type = "mousedown";
+			break;
+		case "touchmove":
+			type = "mousemove";
+			break;
+		case "touchend":
+			type = "mouseup";
+			break;
+		default:
+			return;
+		}
+
+		var simulatedEvent = document.createEvent("MouseEvent");
+		simulatedEvent.initMouseEvent(type, true, true, window, 1,
+				first.screenX, first.screenY, first.clientX, first.clientY,
+				false, false, false, false, 0/*left*/, null);
+		first.target.dispatchEvent(simulatedEvent);
+		//event.preventDefault();
+	}
+
+	function init() {
+		document.addEventListener("touchstart", touchHandler, true);
+		document.addEventListener("touchmove", touchHandler, true);
+		document.addEventListener("touchend", touchHandler, true);
+		document.addEventListener("touchcancel", touchHandler, true);
+	}
+	function isInit(){
+
+	}
+
+	function load() {
+
+		document.addEventListener('touchstart', touch, false);
+		document.addEventListener('touchmove', touch, false);
+		document.addEventListener('touchend', touch, false);
+		var pics = new Array("div1", "div2", "div3", "div4", "div5");
+
+		function touch(event) {
+			var event = event || window.event;
+			var x, y;
+			var oInp = document.getElementById("inp");
+			var d = event.target ? event.target : event.srcElement;
+			var obj;
+			switch (event.type) {
+			case "touchstart":
+				// oInp.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")" +d.id;
+				break;
+			case "touchend":
+				x = event.changedTouches[0].clientX;
+				y = event.changedTouches[0].clientY;		
+				if (d.id.substring(0, 4) == "drag") {
+					//oInp.innerHTML = "<br>Touch end (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")"+d.id;
+					for(var i = 0; i < pics.length; i++){
+						obj = document.getElementById(pics[i]);
+						if (x > obj.clientLeft
+								&& x < (obj.offsetLeft + obj.offsetWidth)
+								&& y > obj.offsetTop
+								&& y < (obj.offsetTop + obj.offsetHeight)) {
+									//if(document.getElementById(pics[i]).children<=1){
+									  
+										document.getElementById(pics[i]).appendChild(
+										event.target);
+										break;
+									//}
+						}
+					}
+				}
+
+				break;
+			case "touchmove":
+				/*if (event.targetTouches.length == 1) {
+					var touch = event.targetTouches[0];
+					obj = document.getElementById(d.id);
+				}*/
+var d2 = event.target ? event.target : event.srcElement;
+if(d2.id == "mybox" ||  d2.id == "candidate"){
+	//event.preventDefault();
+}
+else{
+event.preventDefault();
+}
+				break;
+			}
+		}
+	}
+
+	window.addEventListener('load', load, false);
+</script>
+</head>
+<body>
+	<p class="info">下列事情发生了，请按处理顺序排列图片（拖动图片，每个格子放一个）</p>
+
+	<div id="candidate">
+		<img id="drag1" src="pics/1.jpg" draggable="true"
+			ondragstart="drag(event)" class="image"> <img id="drag2"
+			src="pics/2.jpg" draggable="true" ondragstart="drag(event)"
+			class="image"> <img id="drag3" src="pics/3.jpg"
+			draggable="true" ondragstart="drag(event)" class="image"> <img
+			id="drag4" src="pics/4.jpg" draggable="true"
+			ondragstart="drag(event)" class="image"> <img id="drag5"
+			src="pics/5.jpg" draggable="true" ondragstart="drag(event)"
+			class="image">
+	</div>
+	<div id="inp" />
+	<div id="mybox" class="column">
+		<div id="div1" class="divblock" ondrop="drop(event)"
+			ondragover="allowDrop(event)">1</div>
+		<div id="div2" class="divblock"  ondrop="drop(event)"
+			ondragover="allowDrop(event)">2</div>
+		<div id="div3" class="divblock"  ondrop="drop(event)"
+			ondragover="allowDrop(event)">3</div>
+		<div id="div4" class="divblock" ondrop="drop(event)"
+			ondragover="allowDrop(event)">4</div>
+		<div id="div5" class="divblock" ondrop="drop(event)"
+			ondragover="allowDrop(event)">5</div>
+	</div>
+	<div id="result"></div>
+	<button type="button" class="mybutton" onclick="reset()">reset</button>
+	<button type="button" class="mybutton" onclick="getResult()">Done</button>
+</body>
+</html>

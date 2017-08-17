@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Sortables demo - Interface plugin for jQuery</title>
+        <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="interface.js"></script>
+<style type="text/css" media="all">
+body
+{
+    background: #fff;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+}
+#sort1
+{
+    width: 350px;
+    height: 200px;
+}
+div img 
+{
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin:10px;
+    border:solid 3px #ccc;
+}
+.sorthelper
+{
+    background-color: #f5f5f5;
+    float: left;
+    border:4px solid #ccc;
+}
+.sortableactive
+{
+}
+.sortablehover
+{
+}
+</style>
+</head>
+<body>
+<div id="sort1">
+    <img src="1.jpg" class="sortableitem" id="1" alt="1"/>
+    <img src="2.jpg" class="sortableitem" id="2" alt="2"/>
+    <img src="3.jpg" class="sortableitem" id="3" alt="3"/>
+    <img src="4.jpg" class="sortableitem" id="4" alt="4"/>
+    <img src="5.jpg" class="sortableitem" id="5" alt="5"/>
+    <img src="6.jpg" class="sortableitem" id="6" alt="6"/>
+
+</div>
+<div  class="serializer">
+<a href="#" onClick="serialize(); return false;" >提交排序</a>
+</div>
+<script type="text/javascript">
+$(document).ready(
+    function () {
+        $('#sort1').Sortable(
+            {
+                accept :         'sortableitem',   //拖拽元素class名
+                helperclass :     'sorthelper',     //拖拽时投放位置的样式  
+                activeclass :     'sortableactive', //拖拽时悬空时class
+                hoverclass :     'sortablehover',  //拖拽时经过时class
+                opacity:         0.5,              //拖拽时透明度     
+                fx:                200,              //拖拽时回位速度
+                revert:            true,
+                floats:            true,
+                tolerance:        'pointer',
+                onchange:       changedata         //拖拽状态改变时触发事件
+            }
+        )
+    }
+);
+function changedata()
+{
+}
+
+function serialize(s)
+{
+    serial = $.SortSerialize(s);
+    alert(serial.hash.replace(/&sort1\[\]=/g,",").replace("sort1[]=",""));
+    /*这里可使用jquery form插件ajax提交
+    （http://www.malsup.com/jquery/form/#code-samples）
+       使用也非常方便
+    */
+};
+</script>    
+</body>
+</html>

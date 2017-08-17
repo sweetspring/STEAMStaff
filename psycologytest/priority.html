@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>很准的心理测试，按处理顺序排列图片</title>
+		<meta name="description" content="心理测试，了解潜意识例处理事务的优先级，遇见未知的自己">
+		  <meta name="Keywords" content="心理测试，手机游戏，潜意识，优先级">
+
+	<meta name="author" content="sh">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"
+	name="viewport">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<script src="../commoncssjs/js/jquery-2.1.1.min.js"></script>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+ <meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"
+	name="viewport">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+ <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Google Font and style definitions --> 
+	<link rel="stylesheet" href="../commoncssjs/css/style.css">
+	
+	<!-- include the skins (change to dark if you like) -->
+	<link rel="stylesheet" href="../commoncssjs/css/light/theme.css" id="themestyle">
+	<!-- <link rel="stylesheet" href="../commoncssjs/css/dark/theme.css" id="themestyle"> -->
+	
+	<!--[if lt IE 9]>
+	<script src="../commoncssjs/html5.js"></script>
+	<link rel="stylesheet" href="../commoncssjs/css/ie.css">
+	<![endif]-->
+	
+	<!-- Apple iOS and Android stuff -->
+	<meta name="apple-mobile-web-app-capable" content="no">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+	
+	<!-- Apple iOS and Android stuff - don't remove! -->
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1">
+<style>.divblock {
+	width: 62px;
+	height: 95px;
+	padding: 1px;
+	border: 1px solid #aaaaaa;
+	float: left;
+	margin: 0 0 0 0;
+}
+ 
+
+
+</style>	
+ 
+<script>
+	var meaningintro = new Array("抱孩子：家庭", "看谁在门外：亲友", "接电话：事业", "关掉水龙头：财富",
+			"收衣服：性");
+	var meaning = new Array("家庭", "亲友", "事业", "财富", "性");
+
+	function allowDrop(ev) {
+		ev.preventDefault();
+	}
+
+	function drag(ev) {
+		ev.dataTransfer.setData("Text", ev.target.id);
+	}
+
+	function drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("Text");
+		ev.target.appendChild(document.getElementById(data));
+	}
+	function getResult() {
+		var pics = new Array("div1", "div2", "div3", "div4", "div5");
+		var obj, idname;
+		var message = "采取行动对应的意义为：<br/>";
+		var orders = "你心里的重要次序为：";
+		for (var i = 0; i < pics.length; i++) {
+			obj = document.getElementById(pics[i]).children[0];
+			idname = obj.getAttribute("id").substring(4, 5);
+			message = message + "【" + idname + "】" + meaningintro[idname - 1]
+					+ "<br/>";
+			orders = orders + ">>" + meaning[idname - 1] ;
+		}
+		message = message + "<br/>准吧，快分享给亲友测试一下~~";
+		document.getElementById("result").innerHTML = "<h6>"+orders +"</h6>"+ "<br/>"
+				+ "<p>"+ message+"</p>";
+
+	}
+
+	function reset() {
+
+		window.location.reload();
+
+	}
+
+	function touchHandler(event) {
+		var touches = event.changedTouches, first = touches[0], type = "";
+		switch (event.type) {
+		case "touchstart":
+			type = "mousedown";
+			break;
+		case "touchmove":
+			type = "mousemove";
+			break;
+		case "touchend":
+			type = "mouseup";
+			break;
+		default:
+			return;
+		}
+
+		var simulatedEvent = document.createEvent("MouseEvent");
+		simulatedEvent.initMouseEvent(type, true, true, window, 1,
+				first.screenX, first.screenY, first.clientX, first.clientY,
+				false, false, false, false, 0/*left*/, null);
+		first.target.dispatchEvent(simulatedEvent);
+		//event.preventDefault();
+	}
+
+	function init() {
+		document.addEventListener("touchstart", touchHandler, true);
+		document.addEventListener("touchmove", touchHandler, true);
+		document.addEventListener("touchend", touchHandler, true);
+		document.addEventListener("touchcancel", touchHandler, true);
+	}
+	function isInit(){
+
+	}
+
+	function load() {
+
+		document.addEventListener('touchstart', touch, false);
+		document.addEventListener('touchmove', touch, false);
+		document.addEventListener('touchend', touch, false);
+		var pics = new Array("div1", "div2", "div3", "div4", "div5");
+
+		function touch(event) {
+			var event = event || window.event;
+			var x, y;
+			var oInp = document.getElementById("inp");
+			var d = event.target ? event.target : event.srcElement;
+			var obj;
+			switch (event.type) {
+			case "touchstart":
+				// oInp.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")" +d.id;
+				break;
+			case "touchend":
+				x = event.changedTouches[0].clientX;
+				y = event.changedTouches[0].clientY;		
+				if (d.id.substring(0, 4) == "drag") {
+					//oInp.innerHTML = "<br>Touch end (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")"+d.id;
+					for(var i = 0; i < pics.length; i++){
+						obj = document.getElementById(pics[i]);
+						if (x > obj.clientLeft
+								&& x < (obj.offsetLeft + obj.offsetWidth)
+								&& y > obj.offsetTop
+								&& y < (obj.offsetTop + obj.offsetHeight)) {
+									//if(document.getElementById(pics[i]).children<=1){
+									  
+										document.getElementById(pics[i]).appendChild(
+										event.target);
+										break;
+									//}
+						}
+					}
+				}
+
+				break;
+			case "touchmove":
+				/*if (event.targetTouches.length == 1) {
+					var touch = event.targetTouches[0];
+					obj = document.getElementById(d.id);
+				}*/
+var d2 = event.target ? event.target : event.srcElement;
+if(d2.id == "mybox" ||  d2.id == "candidate"){
+	//event.preventDefault();
+}
+else{
+event.preventDefault();
+}
+				break;
+			}
+		}
+	}
+
+	window.addEventListener('load', load, false);
+</script>
+</head>
+<body>
+	<h6>火烧眉毛啦，快来处理（拖动图片，每格放一个，按处理顺序排列）</h6>
+
+	<div id="candidate">
+		<img id="drag1" src="images/60x81/1.jpg" draggable="true"
+			ondragstart="drag(event)" class="image"> <img id="drag2"
+			src="images/60x81/2.jpg" draggable="true" ondragstart="drag(event)"
+			class="image"> <img id="drag3" src="images/60x81/3.jpg"
+			draggable="true" ondragstart="drag(event)" class="image"> <img
+			id="drag4" src="images/60x81/4.jpg" draggable="true"
+			ondragstart="drag(event)" class="image"> <img id="drag5"
+			src="images/60x81/5.jpg" draggable="true" ondragstart="drag(event)"
+			class="image">
+	</div>
+ 
+	<div id="mybox">
+		<div id="div1" class="divblock" ondrop="drop(event)"
+			ondragover="allowDrop(event)">1</div>
+		<div id="div2" class="divblock"  ondrop="drop(event)"
+			ondragover="allowDrop(event)">2</div>
+		<div id="div3" class="divblock"  ondrop="drop(event)"
+			ondragover="allowDrop(event)">3</div>
+		<div id="div4" class="divblock" ondrop="drop(event)"
+			ondragover="allowDrop(event)">4</div>
+		<div id="div5" class="divblock" ondrop="drop(event)"
+			ondragover="allowDrop(event)">5</div>
+	</div>
+ <br class="clear" /> 
+	<div id="result"></div>
+ 
+	<div class="g12">
+	<button   onclick="reset()">重来</button>
+	<button   onclick="getResult()">处理完了</button>
+	</div>
+</body>
+</html>
