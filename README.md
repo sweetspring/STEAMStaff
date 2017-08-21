@@ -1,5 +1,11 @@
 # STEAMStaff
 As a backup and sharing of the STEAM courses, tools,games
+STEAM: 
+## Science
+## Technology
+## Engineering
+## Art/design
+## Math
 
 # Credits
 englishword and aviation are inspired by 2046.
